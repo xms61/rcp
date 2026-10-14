@@ -23,10 +23,10 @@ Turn the template into this project's repository: the stack chosen and set up, `
 - [x] Owner interviewed, answers logged (2026-10-14)
 - [x] Unused agents removed (2026-10-14)
 - [x] License added; no CODEOWNERS, one person works here (2026-10-14)
-- [ ] Stack set up; `verify` runs lint, typecheck and tests
+- [x] Stack set up; `verify` runs lint, typecheck and tests (2026-10-14)
 - [x] Cloud agent setup updated (not applicable: no cloud agents)
-- [ ] README.md, ARCHITECTURE.md, CODE_STYLE.md and TESTING.md filled in (README.md done)
-- [ ] Verification skill written and proven on one feature, or deferred with a tech-debt row until the first user-facing feature
+- [x] README.md, ARCHITECTURE.md, CODE_STYLE.md and TESTING.md filled in (2026-10-14)
+- [x] Verification skill written and proven on one feature, or deferred with a tech-debt row until the first user-facing feature (2026-10-14: deferred; the app has no feature yet)
 - [ ] No template placeholders left; `.github/README.md` deleted
 
 ## Decision log
@@ -48,6 +48,8 @@ Turn the template into this project's repository: the stack chosen and set up, `
 
 ## Surprises
 - 2026-10-14: `xms61/rcp` already existed (private, created 2023) with an MIT license, a Go `.gitignore` and a one-line README.
+- 2026-10-14: `pnpm setup` is a pnpm built-in that edits the shell profile, so it never reaches the repo's `setup` script. The docs say `pnpm run setup`; every other script name is free.
+- 2026-10-14: ESLint 10 loads an `eslint.config.ts` through `jiti`, which this repo gets only transitively (from TanStack's router generator), so the config is `eslint.config.js`.
 
 ## Validation
 `pnpm verify` passes with the stack's checks included, `pnpm check:docs` prints no placeholder warnings, and CI is green on the pull request that finishes this plan. Once this plan moves to `completed/`, any placeholder left fails the doc checks.

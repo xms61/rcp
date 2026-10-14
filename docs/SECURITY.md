@@ -26,7 +26,7 @@ Each boundary in [AGENTS.md](../AGENTS.md) and what stops an agent from crossing
 | Never commit home-folder paths or machine names | The tracked-files check: home-folder paths in pre-commit and CI; user and host names in pre-commit only, and only names of five or more characters that aren't generic account names, because short and generic names (and CI runners' names) match ordinary words |
 | Never skip hooks | Partly: the guard hook blocks `--no-verify`, `git commit -n`, changing or unsetting `core.hooksPath`, and removing git's `core` config section, not every way around the hooks (deleting `.githooks/pre-commit` gets through). CI runs the same checks on every pull request and is the backstop |
 | Never force-push | The guard hook; branch protection on `main` where the repository has it |
-| Never weaken, skip or delete a failing test or check | Review only ([REVIEW.md](../REVIEW.md)) |
+| Never weaken, skip or delete a failing test or check | Partly: ESLint fails on skipped and focused tests (`vitest/no-disabled-tests`, `vitest/no-focused-tests`). Weakening or deleting a test: review only ([REVIEW.md](../REVIEW.md)) |
 | Never downgrade a dependency to make a build pass | Partly: the guard hook blocks hand edits of lockfiles. Otherwise review only |
 | Ask before adding a dependency | Partly: Claude Code asks before `pnpm add`, `pnpm install` and `pnpm i`, and npm's `npm install` and `npm i` (Bash and PowerShell), not `npm add`, other package managers or hand edits of `package.json` |
 | Ask before changing CI workflows or agent config | Claude Code asks before editing those paths, skills in `.claude/skills/` included; REVIEW.md flags such changes for a human; on a team, code-owner review ([below](#agents-in-ci)) |

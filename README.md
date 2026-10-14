@@ -10,6 +10,7 @@ You need Node 22.12 or later (`.nvmrc` pins 24) and [pnpm](https://pnpm.io/insta
 ```bash
 pnpm install   # dependencies, from the lockfile
 pnpm run setup # once per clone: enables the git hooks
+pnpm dev       # the app at http://localhost:3000
 pnpm verify    # every check a change must pass
 ```
 

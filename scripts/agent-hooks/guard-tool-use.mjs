@@ -69,17 +69,21 @@ function skipsCommitHooks(command) {
 
 const COMMAND_RULES = [
   {
-    test: (command) => /(^|\s)--no-verify(?=\s|$)/i.test(command) || HOOKS_PATH_CHANGE.test(command) || skipsCommitHooks(command),
+    test: (command) =>
+      /(^|\s)--no-verify(?=\s|$)/i.test(command) || HOOKS_PATH_CHANGE.test(command) || skipsCommitHooks(command),
     reason: 'skips the git hooks that check secrets and docs. Fix what the hook reports instead.',
   },
   {
     test: (command) =>
-      /\bgit\b[^;&|\n]*\bpush\b[^;&|\n]*\s(-f|--force|--force-with-lease)(=\S*)?(?=\s|$)|\bgit\b[^;&|\n]*\bpush\b[^;&|\n]*\s\+\S/.test(command),
+      /\bgit\b[^;&|\n]*\bpush\b[^;&|\n]*\s(-f|--force|--force-with-lease)(=\S*)?(?=\s|$)|\bgit\b[^;&|\n]*\bpush\b[^;&|\n]*\s\+\S/.test(
+        command,
+      ),
     reason: 'rewrites shared history. Ask the user to run it.',
   },
   {
     test: (command) => /(^|[\s'"=/<>])\.env(?!\.example)(\.[\w.-]+)?(?=$|[\s'";|&)<>])/.test(command),
-    reason: 'touches .env, which holds local secrets. Read .env.example for the variable names, and ask the user for values.',
+    reason:
+      'touches .env, which holds local secrets. Read .env.example for the variable names, and ask the user for values.',
   },
 ];
 // Codex sends file edits as one apply_patch call whose patch names each file it adds, updates, deletes or moves to.
@@ -87,7 +91,8 @@ const PATCH_PATH = /^\*\*\* (?:(?:Add|Update|Delete) File|Move to): (.+)$/gm;
 
 function editedPaths(event) {
   const input = event.tool_input ?? {};
-  if (event.tool_name === 'apply_patch') return [...String(input.command ?? '').matchAll(PATCH_PATH)].map((m) => m[1].trim());
+  if (event.tool_name === 'apply_patch')
+    return [...String(input.command ?? '').matchAll(PATCH_PATH)].map((m) => m[1].trim());
   return [input.file_path, input.notebook_path].filter((path) => typeof path === 'string');
 }
 

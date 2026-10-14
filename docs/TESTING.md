@@ -15,7 +15,10 @@ last-verified: 2026-10-14
 - A behavior that a unit test can't reach (a UI flow, a deploy) gets an end-to-end check the agent can run itself, such as a browser test or a run of the [verification skill](#verification-skill).
 
 ## Stack
-TODO(template): the test runner, where tests live, how to run one file, and coverage thresholds if any. Add the commands to the AGENTS.md commands table and to the `verify` script.
+- **Vitest** runs `src/**/*.test.{ts,tsx}`, which sit next to the code they test: `pnpm test` for all of them, `pnpm test <path>` for one file. Its config ([vitest.config.ts](../vitest.config.ts)) is separate from `vite.config.ts`, so tests run without the TanStack Start plugin. There is no coverage threshold.
+- Logic that needs no I/O goes in `src/domain/` ([ARCHITECTURE.md](../ARCHITECTURE.md#layers)) and is tested there with literal values.
+- `verify` ends with `pnpm build`, which catches errors that only the production build shows.
+- There are no browser or end-to-end tests yet. The first user-facing feature brings the [verification skill](#verification-skill), which drives the running app ([tech-debt tracker](exec-plans/tech-debt-tracker.md)).
 
 ## Proving behavior
 When a change alters what a user sees or does, prove it on the running app, not on a proxy such as a passing build or the agent's own report.

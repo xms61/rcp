@@ -1,0 +1,5 @@
+# Markdown keeps its hand-written tables; generated files are left as their tools write them.
+*.md
+pnpm-lock.yaml
+src/routeTree.gen.ts
+LICENSES/

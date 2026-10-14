@@ -17,7 +17,15 @@ const BOOTSTRAP_PLAN = 'docs/exec-plans/active/bootstrap.md';
 // The template's introduction, which GitHub shows ahead of the project's README; bootstrap deletes it.
 const TEMPLATE_INTRO = '.github/README.md';
 const TEMPLATE_INTRO_TITLE = '# Agent-ready repository template';
-const SKIPPED_DIRS = new Set(['.git', 'node_modules', 'dist', 'build', 'coverage', 'docs/scratch', '.claude/worktrees']);
+const SKIPPED_DIRS = new Set([
+  '.git',
+  'node_modules',
+  'dist',
+  'build',
+  'coverage',
+  'docs/scratch',
+  '.claude/worktrees',
+]);
 // Entry points and agent config: their links are checked, but they need no frontmatter and no inbound link.
 const META_FILES = new Set(['AGENTS.md', 'CLAUDE.md', 'README.md', 'REVIEW.md', 'CHANGELOG.md']);
 const META_DIRS = ['.github/', '.agents/', '.claude/', '.codex/', '.gemini/'];
@@ -102,7 +110,10 @@ function utcIso(date) {
 // Dates are UTC, the date CI runs in. One day of slack accepts a date written on a clock ahead of UTC.
 function frontmatterProblems(fields, today) {
   if (!fields)
-    return { errors: ['missing frontmatter; start the file with status (stub, draft or verified) and last-verified'], warnings: [] };
+    return {
+      errors: ['missing frontmatter; start the file with status (stub, draft or verified) and last-verified'],
+      warnings: [],
+    };
   const errors = [];
   if (!STATUSES.includes(fields.status)) errors.push(`status must be one of ${STATUSES.join(', ')}`);
   const lastVerified = fields['last-verified'] ?? '';
@@ -190,7 +201,9 @@ export function checkDocs(root, today = new Date()) {
   if (bootstrapping)
     warnings.push(`${BOOTSTRAP_PLAN}: bootstrap is not finished, so these checks cover the template, not the project`);
   else if (texts.get(TEMPLATE_INTRO)?.split(/\r?\n/)[0].trim() === TEMPLATE_INTRO_TITLE)
-    errors.push(`${TEMPLATE_INTRO}: the template's introduction is left after bootstrap; delete it so GitHub shows the project's README`);
+    errors.push(
+      `${TEMPLATE_INTRO}: the template's introduction is left after bootstrap; delete it so GitHub shows the project's README`,
+    );
 
   const reachable = reachableFrom(ENTRY, texts);
   const statuses = new Map();

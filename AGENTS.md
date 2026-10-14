@@ -28,11 +28,12 @@ This file is the map, not the manual: it says which doc to read for which task. 
 | Tracked-files check | `pnpm check:files` (`--staged` for staged files only) |
 | Skills | Edit `.claude/skills/` |
 | Tests of the repo scripts | `pnpm test:scripts` |
-| Install | TODO(template) |
-| Run locally | TODO(template) |
-| Lint and format | TODO(template), then add it to `verify` |
-| Typecheck | TODO(template), then add it to `verify` |
-| Tests, all and one file | TODO(template), then add them to `verify` |
+| Install | `pnpm install` |
+| Run locally | `pnpm dev`, then open http://localhost:3000 |
+| Lint and format | `pnpm lint`; `pnpm format` writes, `pnpm format:check` only checks |
+| Typecheck | `pnpm typecheck` |
+| Tests, all and one file | `pnpm test`; `pnpm test src/domain/units.test.ts` |
+| Production build | `pnpm build` (also regenerates `src/routeTree.gen.ts`) |
 
 ## How to work
 1. Read the docs your task needs. For work that spans sessions or areas, create or resume an exec plan first ([PLANS.md](docs/PLANS.md)).

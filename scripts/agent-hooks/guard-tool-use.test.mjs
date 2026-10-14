@@ -14,7 +14,13 @@ test('allows ordinary edits and commands', () => {
 });
 
 test('blocks edits to env files, git internals, lockfiles and keys', () => {
-  const paths = ['/repo/.env', '/repo/config/.env.local', '/repo/.git/config', '/repo/package-lock.json', '/repo/tls.pem'];
+  const paths = [
+    '/repo/.env',
+    '/repo/config/.env.local',
+    '/repo/.git/config',
+    '/repo/package-lock.json',
+    '/repo/tls.pem',
+  ];
   assert.deepEqual(
     paths.map((path) => violations(edit(path)).length),
     [1, 1, 1, 1, 1],

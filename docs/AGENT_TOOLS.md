@@ -11,6 +11,7 @@ Claude Code is the only coding agent set up in this repo. It reads [AGENTS.md](.
 | File | Purpose |
 | :-- | :-- |
 | [.claude/settings.json](../.claude/settings.json) | Shared permissions, sandbox and the guard hook. Personal overrides go in `.claude/settings.local.json`, which git ignores |
+| [.claude/launch.json](../.claude/launch.json) | The dev server (`pnpm dev`, port 3000) that the Claude desktop app's preview pane starts |
 | [.claude/agents/reviewer.md](../.claude/agents/reviewer.md) | Fresh-context review subagent, which reports by [REVIEW.md](../REVIEW.md) |
 | `.claude/skills/` | Procedures loaded on demand: [exec-plan](../.claude/skills/exec-plan/SKILL.md), [doc-gardening](../.claude/skills/doc-gardening/SKILL.md), [diagnosing-bugs](../.claude/skills/diagnosing-bugs/SKILL.md), and [retro](../.claude/skills/retro/SKILL.md), which runs only when someone asks for it (`disable-model-invocation` in its frontmatter) |
 | [scripts/agent-hooks/guard-tool-use.mjs](../scripts/agent-hooks/guard-tool-use.mjs) | Blocks edits to `.env`, keys, lockfiles and `.git/`, and commands that skip hooks, force-push or touch `.env` |
