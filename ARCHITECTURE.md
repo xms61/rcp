@@ -18,13 +18,13 @@ RCP is one [TanStack Start](https://tanstack.com/start) app (React, TypeScript) 
 | `docs/` | The system of record ([KNOWLEDGE_BASE.md](docs/KNOWLEDGE_BASE.md)) |
 
 ## Layers
-`routes → server → db → domain`: a layer may import the layers to its right, never to its left.
+`routes → server → db → domain`: each layer imports only the layer directly to its right, plus `domain`, which every layer may use. So `routes` never imports `db`: pages reach the database only through server functions, which also keeps the database driver out of the browser bundle.
 - `src/domain/`: plain TypeScript. No React, TanStack, Node APIs or I/O, so it runs anywhere and its tests need no setup.
 - `src/db/`: the Drizzle schema and queries. Not created yet; it comes with the first feature that stores recipes.
 - `src/server/`: TanStack Start server functions, the only way pages reach the database. Not created yet either.
 - `src/routes/`: pages, which call server functions and may use `domain` to format values.
 
-ESLint enforces the `domain` boundary (`no-restricted-imports` in [eslint.config.js](eslint.config.js)). When `db` and `server` are created, extend the rule to them in the same change.
+ESLint enforces the `domain` boundary (`no-restricted-imports` in [eslint.config.js](eslint.config.js), tested in [scripts/lint-rules.test.mjs](scripts/lint-rules.test.mjs)). When `db` and `server` are created, add their boundaries and test cases in the same change.
 
 ## Invariants
 - `src/domain/` imports nothing from React, TanStack, Node or another `src/` layer: ESLint, `no-restricted-imports`.
