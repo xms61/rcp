@@ -7,7 +7,7 @@ last-verified: 2026-10-14
 
 ## Principles
 - Test first: write or update the test, watch it fail for the right reason, then make it pass. A test that has never failed proves nothing.
-- `npm run verify` runs every check a change must pass, locally and in CI. When it gets slow, add a fast subset for the edit loop; don't drop checks from `verify`.
+- `pnpm verify` runs every check a change must pass, locally and in CI. When it gets slow, add a fast subset for the edit loop; don't drop checks from `verify`.
 - Tests never use the network or real user data. Use in-memory or temp-dir stores and stubs.
 - Quiet on success, specific on failure: a failing test names the case and the expected and actual values. Thousands of lines of passing output bury the one line an agent needs.
 - Never weaken, skip or delete a failing test to get green. If the test is wrong, fix it in its own commit and say why in the PR.
@@ -38,4 +38,4 @@ Once the app runs, it gets a project skill, `.claude/skills/verify-<app>/`, that
 Prove the skill once before relying on it: launch, doctor, drive one feature, capture evidence, clean up, and check that the evidence is still there. The [doc-gardening pass](../.claude/skills/doc-gardening/SKILL.md) drives every feature in the map again and fixes the skill where it has drifted. A library can skip the skill: its tests already call it the way its users do.
 
 ## Repo scripts
-The checks in `scripts/` have their own tests, next to each script as `*.test.mjs`, run by `npm run test:scripts` (Node's built-in test runner). They build their fixtures in temp directories. CI runs `npm run verify` on Linux only, as the required check: RCP is a web app, so nothing is tested per operating system.
+The checks in `scripts/` have their own tests, next to each script as `*.test.mjs`, run by `pnpm test:scripts` (Node's built-in test runner). They build their fixtures in temp directories. CI runs `pnpm verify` on Linux only, as the required check: RCP is a web app, so nothing is tested per operating system.

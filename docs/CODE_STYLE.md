@@ -23,7 +23,7 @@ When a rule can be checked, write the check instead of the sentence. The [retro 
 - Each custom rule has a test with a failing case taken from the real mistake and a passing case for the right form: `invalid` and `valid` cases in the linter's `RuleTester`, or `# ruleid:` and `# ok:` annotations run by `semgrep --test`, plus a `.fixed` file when the rule has an autofix.
 - When the pattern is already common, fail only on new occurrences, with ESLint's bulk suppressions or Semgrep's diff-aware scan against a baseline commit, and put the existing ones in the [tech-debt tracker](exec-plans/tech-debt-tracker.md).
 - An exception sits on the offending line, names the rule, and says why, who approved it and, if it is temporary, when it expires. Disabling a rule for a whole file or the project needs a person's approval.
-- A check that runs while an agent edits, from a hook, reports only findings with a clear fix. A finding without one makes the agent rewrite code just to silence it; leave those to `npm run verify` and review.
+- A check that runs while an agent edits, from a hook, reports only findings with a clear fix. A finding without one makes the agent rewrite code just to silence it; leave those to `pnpm verify` and review.
 - Which tool: for JavaScript and TypeScript, oxlint with custom rules as JS plugins (ESLint-compatible, but in alpha as of 2026, with no custom type-aware rules and weaker Windows support), or ESLint when a custom rule needs type information. For several languages, or patterns in YAML, Dockerfiles and workflows, Semgrep CE or Opengrep with the rules kept in the repo. For the repo's own structure, a Node script in `scripts/` with tests, like the doc checks. Record the choice under Stack.
 
 ## Stack

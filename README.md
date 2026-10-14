@@ -5,11 +5,12 @@ RCP is a recipe database: it keeps each recipe with its ingredient list, prepara
 New from the template? Follow [.github/README.md](.github/README.md), the template's own introduction, then delete it.
 
 ## Develop
-The repo tooling needs Node 22 or later (`.nvmrc` pins 24).
+You need Node 22.12 or later (`.nvmrc` pins 24) and [pnpm](https://pnpm.io/installation). Any recent pnpm switches to the version that `packageManager` in `package.json` pins.
 
 ```bash
-npm run setup     # once per clone: enables the git hooks
-npm run verify    # every check a change must pass
+pnpm install   # dependencies, from the lockfile
+pnpm run setup # once per clone: enables the git hooks
+pnpm verify    # every check a change must pass
 ```
 
 ## Contributing, by people and coding agents

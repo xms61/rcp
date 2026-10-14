@@ -27,7 +27,7 @@ Use a debugger, or a few logs at the boundary in question, each tagged with one 
 ## 5. Fix it and keep the test
 1. Turn the small check into a regression test at a layer where it exercises the real bug. If no unit test can reach it, use an end-to-end check ([TESTING.md](../../../docs/TESTING.md)); if nothing can, say so in the pull request and add a row to the [tech-debt tracker](../../../docs/exec-plans/tech-debt-tracker.md).
 2. Watch the test fail, fix the root cause, and watch it pass. Run the check from step 1 again.
-3. Remove every tagged log (search for the prefix) and any throwaway script, then run `npm run verify`.
+3. Remove every tagged log (search for the prefix) and any throwaway script, then run `pnpm verify`.
 4. In the commit or pull request, state the cause you confirmed and the evidence for it.
 
 Adapted from [Matt Pocock's diagnosing-bugs skill](https://github.com/mattpocock/skills/blob/main/skills/engineering/diagnosing-bugs/SKILL.md) (MIT License, Copyright (c) 2026 Matt Pocock).

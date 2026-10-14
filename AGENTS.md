@@ -22,12 +22,12 @@ This file is the map, not the manual: it says which doc to read for which task. 
 ## Commands
 | Task | Command |
 | :-- | :-- |
-| One-time setup per clone | `npm run setup` (enables the git hooks) |
-| Everything a change must pass | `npm run verify` |
-| Doc checks | `npm run check:docs` |
-| Tracked-files check | `npm run check:files` (`-- --staged` for staged files only) |
+| One-time setup per clone | `pnpm run setup` (enables the git hooks) |
+| Everything a change must pass | `pnpm verify` |
+| Doc checks | `pnpm check:docs` |
+| Tracked-files check | `pnpm check:files` (`--staged` for staged files only) |
 | Skills | Edit `.claude/skills/` |
-| Tests of the repo scripts | `npm run test:scripts` |
+| Tests of the repo scripts | `pnpm test:scripts` |
 | Install | TODO(template) |
 | Run locally | TODO(template) |
 | Lint and format | TODO(template), then add it to `verify` |
@@ -38,7 +38,7 @@ This file is the map, not the manual: it says which doc to read for which task. 
 1. Read the docs your task needs. For work that spans sessions or areas, create or resume an exec plan first ([PLANS.md](docs/PLANS.md)).
 2. Plan before code unless the change fits in one sentence. When the request leaves design choices open, ask the user before building.
 3. Write or update the test first and watch it fail, then make it pass.
-4. Run `npm run verify` before saying you are done. Report what you ran and the result, and say what you could not check.
+4. Run `pnpm verify` before saying you are done. Report what you ran and the result, and say what you could not check.
 5. Update the docs that describe changed behavior in the same change, and set their `last-verified` to today's UTC date.
 
 ## Boundaries

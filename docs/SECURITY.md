@@ -28,7 +28,7 @@ Each boundary in [AGENTS.md](../AGENTS.md) and what stops an agent from crossing
 | Never force-push | The guard hook; branch protection on `main` where the repository has it |
 | Never weaken, skip or delete a failing test or check | Review only ([REVIEW.md](../REVIEW.md)) |
 | Never downgrade a dependency to make a build pass | Partly: the guard hook blocks hand edits of lockfiles. Otherwise review only |
-| Ask before adding a dependency | Partly: Claude Code asks before `npm install` and `npm i` (Bash and PowerShell), not `npm add`, other package managers or hand edits of `package.json` |
+| Ask before adding a dependency | Partly: Claude Code asks before `pnpm add`, `pnpm install` and `pnpm i`, and npm's `npm install` and `npm i` (Bash and PowerShell), not `npm add`, other package managers or hand edits of `package.json` |
 | Ask before changing CI workflows or agent config | Claude Code asks before editing those paths, skills in `.claude/skills/` included; REVIEW.md flags such changes for a human; on a team, code-owner review ([below](#agents-in-ci)) |
 | Ask before pushing to `main` | Partly: Claude Code asks before a `git push` that names `main`, not a bare `git push` from `main`. Branch protection stops the rest where the repository has it: GitHub Free offers it only for public repositories, and admins bypass it unless "Do not allow bypassing the above settings" is on |
 | Ask before working on an issue without the `ready-for-agent` label | Partly: only people with triage access can apply labels on GitHub. Nothing stops a local agent from reading an unlabelled issue |

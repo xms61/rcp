@@ -35,6 +35,6 @@ The rules and the templates are in [docs/PLANS.md](../../../docs/PLANS.md); this
 1. If the plan has tickets, check that every one is closed, tick their Progress lines, and close the parent issue.
 2. Run the Validation commands and record the result.
 3. Fill in Outcome, move the file to `docs/exec-plans/completed/`, and update links to it.
-4. Run `npm run verify`.
+4. Run `pnpm verify`.
 
 The interview in Start step 4 is adapted from [Matt Pocock's grilling skill](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md) (MIT License, Copyright (c) 2026 Matt Pocock); the ticket rules follow his to-tickets skill.
