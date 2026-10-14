@@ -36,7 +36,8 @@ Turn the template into this project's repository: the stack chosen and set up, `
 - 2026-10-14: No AI agents in CI. The owner won't use the Claude workflows, which need an `ANTHROPIC_API_KEY` secret, so `claude.yml` and `claude-review.yml` were removed. Review stays local, with the `reviewer` subagent.
 - 2026-10-14: License: the repository's existing MIT license stays in `LICENSE`; the template's Apache 2.0 text moved to `LICENSES/Apache-2.0.txt`.
 - 2026-10-14: One person works on it, so no CODEOWNERS and no required review in branch protection.
-- 2026-10-14: RCP is a web app. The framework, data store and hosting are still open.
+- 2026-10-14: The repository is public, which is what keeps branch protection (required checks verify and secrets, admins included), secret scanning and push protection available on GitHub Free.
+- 2026-10-14: RCP is a web app. The framework, data store and hosting are settled in the entries below.
 - 2026-10-14: CI runs `verify` on Linux only. The template's `verify-other-os` job (Windows and macOS) was removed: the owner doesn't need checks on other systems for a web app.
 - 2026-10-14: RCP runs as one Node server, on the owner's PC first, with no login. It may move to a home server or small VPS later for phone access, and gets a login then. Rejected: a home server from day one (a login needed now) and a serverless host (needs a hosted database, no local files).
 - 2026-10-14: Framework: TanStack Start (React, TypeScript), the owner's pick: React is what agents know best, and routes, search params and server functions are type-checked end to end. Its 2025 betas changed the API a lot, so agents may write the old forms; typecheck catches most of them. Rejected: SvelteKit (agents are less fluent in Svelte 5), React Router 8 (looser route types), Next.js (heavier, at its best on Vercel).
