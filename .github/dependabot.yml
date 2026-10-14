@@ -9,7 +9,8 @@ updates:
       actions:
         patterns: ['*']
 
-  # Minor and patch updates arrive as one grouped PR; each major gets its own.
+  # Minor and patch updates arrive as one grouped PR; each major gets its own. `npm` is Dependabot's name for
+  # the JavaScript ecosystem; it updates pnpm-lock.yaml too.
   - package-ecosystem: npm
     directory: /
     schedule:

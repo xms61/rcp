@@ -2,10 +2,10 @@
 <!-- What changed and why, in two or three sentences. Link the exec plan if there is one, and write "Closes #<n>" for the ticket it finishes. -->
 
 ## Verification
-<!-- The commands you ran and their result, for example: `npm run verify` passed. -->
+<!-- The commands you ran and their result, for example: `pnpm verify` passed. -->
 
 ## Checks
-- [ ] `npm run verify` passes
+- [ ] `pnpm verify` passes
 - [ ] Docs that describe changed behavior are updated, with a new `last-verified`
 - [ ] Exec plan progress and decision log updated, or the plan moved to `completed/` (if the work has one; a ticket's pull request updates only the decision log)
 - [ ] No secrets, `.env` files or `docs/scratch/` staged

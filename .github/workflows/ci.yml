@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Every check a change must pass. `npm run verify` is the same command agents and people run locally, so
-  # adding the stack's lint, typecheck and tests to it adds them here too.
+  # Every check a change must pass. `pnpm verify` is the same command agents and people run locally, so
+  # adding a check to it adds it here too.
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -23,12 +23,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      # Installs the pnpm version that package.json's `packageManager` field pins.
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
-          # Add `cache: npm` once package.json has dependencies.
-      - run: npm ci
-      - run: npm run verify
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm verify
 
   # Secrets in the commits themselves, which the tracked-files check can't see once a later commit removes them.
   secrets:

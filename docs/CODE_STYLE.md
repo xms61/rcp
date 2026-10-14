@@ -23,11 +23,15 @@ When a rule can be checked, write the check instead of the sentence. The [retro 
 - Each custom rule has a test with a failing case taken from the real mistake and a passing case for the right form: `invalid` and `valid` cases in the linter's `RuleTester`, or `# ruleid:` and `# ok:` annotations run by `semgrep --test`, plus a `.fixed` file when the rule has an autofix.
 - When the pattern is already common, fail only on new occurrences, with ESLint's bulk suppressions or Semgrep's diff-aware scan against a baseline commit, and put the existing ones in the [tech-debt tracker](exec-plans/tech-debt-tracker.md).
 - An exception sits on the offending line, names the rule, and says why, who approved it and, if it is temporary, when it expires. Disabling a rule for a whole file or the project needs a person's approval.
-- A check that runs while an agent edits, from a hook, reports only findings with a clear fix. A finding without one makes the agent rewrite code just to silence it; leave those to `npm run verify` and review.
+- A check that runs while an agent edits, from a hook, reports only findings with a clear fix. A finding without one makes the agent rewrite code just to silence it; leave those to `pnpm verify` and review.
 - Which tool: for JavaScript and TypeScript, oxlint with custom rules as JS plugins (ESLint-compatible, but in alpha as of 2026, with no custom type-aware rules and weaker Windows support), or ESLint when a custom rule needs type information. For several languages, or patterns in YAML, Dockerfiles and workflows, Semgrep CE or Opengrep with the rules kept in the repo. For the repo's own structure, a Node script in `scripts/` with tests, like the doc checks. Record the choice under Stack.
 
 ## Stack
-TODO(template): language version, formatter, linter and their config files, and naming conventions that differ from the ecosystem's defaults. Write here only what the tools can't enforce.
+- **TypeScript 6.0**, strict with `noUncheckedIndexedAccess` ([tsconfig.json](../tsconfig.json)). It stays on 6.0 because typescript-eslint supports TypeScript below 6.1 only; move to 7 when it supports it.
+- **Prettier** ([.prettierrc.json](../.prettierrc.json)): 120 columns, single quotes. Markdown is left out ([.prettierignore](../.prettierignore)), so hand-written tables keep their compact form.
+- **ESLint** ([eslint.config.js](../eslint.config.js)): typescript-eslint's strict type-checked rules, plus the React hooks, TanStack Router and Vitest rules, and the layer rule from [ARCHITECTURE.md](../ARCHITECTURE.md#layers). Custom rules go here too: the type-aware rules already run in ESLint, which oxlint's plugins can't match. `scripts/` is plain Node `.mjs` outside the TypeScript project, so ESLint skips it; Prettier and `pnpm test:scripts` still cover it.
+- **pnpm:** its settings go in `pnpm-workspace.yaml` ([reference](https://pnpm.io/settings)), created when the first one is needed. It doesn't install versions published less than a day ago, and it fails the install when a dependency has a build script not listed under `allowBuilds`. better-sqlite3 will need a line there. `setup` is a pnpm built-in, so run the repo's script as `pnpm run setup`.
+- **Naming:** route files follow TanStack Router's file-based routing (`__root.tsx`, `index.tsx`, `recipes.$id.tsx`), so a file's name is its URL. Tests sit next to the code they test, as `*.test.ts`.
 
 ## Commits and pull requests
 - Commit subjects follow `type(scope): summary`, with types feat, fix, docs, refactor, test, chore and ci.

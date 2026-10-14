@@ -11,6 +11,7 @@ Claude Code is the only coding agent set up in this repo. It reads [AGENTS.md](.
 | File | Purpose |
 | :-- | :-- |
 | [.claude/settings.json](../.claude/settings.json) | Shared permissions, sandbox and the guard hook. Personal overrides go in `.claude/settings.local.json`, which git ignores |
+| [.claude/launch.json](../.claude/launch.json) | The dev server (`pnpm dev`, port 3000) that the Claude desktop app's preview pane starts |
 | [.claude/agents/reviewer.md](../.claude/agents/reviewer.md) | Fresh-context review subagent, which reports by [REVIEW.md](../REVIEW.md) |
 | `.claude/skills/` | Procedures loaded on demand: [exec-plan](../.claude/skills/exec-plan/SKILL.md), [doc-gardening](../.claude/skills/doc-gardening/SKILL.md), [diagnosing-bugs](../.claude/skills/diagnosing-bugs/SKILL.md), and [retro](../.claude/skills/retro/SKILL.md), which runs only when someone asks for it (`disable-model-invocation` in its frontmatter) |
 | [scripts/agent-hooks/guard-tool-use.mjs](../scripts/agent-hooks/guard-tool-use.mjs) | Blocks edits to `.env`, keys, lockfiles and `.git/`, and commands that skip hooks, force-push or touch `.env` |
@@ -36,4 +37,4 @@ Left out on purpose; the reasons are in the bootstrap plan's Decision log. The [
 ## Optional additions
 - **MCP servers:** add them in `.mcp.json` and give each the narrowest scope that works. Every server's tools cost context, and every server is code you run.
 - **Agent telemetry:** to see sessions, cost and tool calls, Claude Code exports OpenTelemetry when `CLAUDE_CODE_ENABLE_TELEMETRY=1` and an OTLP endpoint are set. Put them in user or managed settings, not the repo, and leave prompt and tool-content logging off: it sends source code to the telemetry backend.
-- **Harder verification gate:** a Claude Code `Stop` hook that runs `npm run verify` blocks a turn from ending while checks fail. It is slower and costs more per session; add it when the agent often stops before verifying. Split the work by cost: a hook after each edit runs only fast checks whose findings have a clear fix ([CODE_STYLE.md](CODE_STYLE.md#custom-checks)), and the full `verify` runs once at `Stop`.
+- **Harder verification gate:** a Claude Code `Stop` hook that runs `pnpm verify` blocks a turn from ending while checks fail. It is slower and costs more per session; add it when the agent often stops before verifying. Split the work by cost: a hook after each edit runs only fast checks whose findings have a clear fix ([CODE_STYLE.md](CODE_STYLE.md#custom-checks)), and the full `verify` runs once at `Stop`.
