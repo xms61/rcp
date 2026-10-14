@@ -20,7 +20,7 @@ Turn the template into this project's repository: the stack chosen and set up, `
 8. Replace the remaining placeholders, including how to report a vulnerability in SECURITY.md, then delete `.github/README.md`, the template's introduction, which GitHub shows in place of the project's README.
 
 ## Progress
-- [ ] Owner interviewed, answers logged (partly: purpose, agents, CI review, license and team size are logged; stack, runtime and where it runs are open)
+- [ ] Owner interviewed, answers logged (partly: purpose, web app, agents, CI review, license and team size are logged; framework, data store and hosting are open)
 - [x] Unused agents removed (2026-10-14)
 - [x] License added; no CODEOWNERS, one person works here (2026-10-14)
 - [ ] Stack set up; `verify` runs lint, typecheck and tests
@@ -36,7 +36,8 @@ Turn the template into this project's repository: the stack chosen and set up, `
 - 2026-10-14: No AI agents in CI. The owner won't use the Claude workflows, which need an `ANTHROPIC_API_KEY` secret, so `claude.yml` and `claude-review.yml` were removed. Review stays local, with the `reviewer` subagent.
 - 2026-10-14: License: the repository's existing MIT license stays in `LICENSE`; the template's Apache 2.0 text moved to `LICENSES/Apache-2.0.txt`.
 - 2026-10-14: One person works on it, so no CODEOWNERS and no required review in branch protection.
-- 2026-10-14: CI's `verify-other-os` job runs on Windows only, the system the owner works on. macOS was dropped because on a private repository its minutes count ten times against the free allowance.
+- 2026-10-14: RCP is a web app. The framework, data store and hosting are still open.
+- 2026-10-14: CI runs `npm run verify` on Linux only. The template's `verify-other-os` job (Windows and macOS) was removed: the owner doesn't need checks on other systems for a web app.
 
 ## Surprises
 - 2026-10-14: `xms61/rcp` already existed (private, created 2023) with an MIT license, a Go `.gitignore` and a one-line README.

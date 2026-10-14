@@ -30,27 +30,6 @@ jobs:
       - run: npm ci
       - run: npm run verify
 
-  # The same checks on Windows, where the owner runs the hooks and scripts. A separate job, so the required
-  # `verify` check above keeps its name. No macOS: on a private repository its minutes count ten times against
-  # the free allowance.
-  verify-other-os:
-    name: verify on ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [windows-latest]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: .nvmrc
-      - run: npm ci
-      - run: npm run verify
-
   # Secrets in the commits themselves, which the tracked-files check can't see once a later commit removes them.
   secrets:
     runs-on: ubuntu-latest
