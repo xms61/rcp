@@ -17,3 +17,4 @@ If any is missing, skip the doc; an exec plan's decision log is enough for small
 | Doc | Status | Summary |
 | :-- | :-- | :-- |
 | [Core beliefs](core-beliefs.md) | draft | How the repo is run so that agents can do most of the work safely |
+| [Nutrition computed from ingredients](nutrition-from-ingredients.md) | draft | Recipe nutrition is summed from foods linked to each ingredient line; the food sources, units and overlap rule |
