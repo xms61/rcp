@@ -1,1 +1,19 @@
-# rcp
+# RCP
+
+RCP is a recipe database: it keeps each recipe with its ingredient list, preparation steps, nutrients and the other details worth tracking. It is a personal tool for its owner, to collect, find and reuse recipes.
+
+New from the template? Follow [.github/README.md](.github/README.md), the template's own introduction, then delete it.
+
+## Develop
+The repo tooling needs Node 22 or later (`.nvmrc` pins 24).
+
+```bash
+npm run setup     # once per clone: enables the git hooks
+npm run verify    # every check a change must pass
+```
+
+## Contributing, by people and coding agents
+[AGENTS.md](AGENTS.md) is the map: it says which doc to read for which task, the commands, and the boundaries. How the docs are kept true is in [docs/KNOWLEDGE_BASE.md](docs/KNOWLEDGE_BASE.md), and how Claude Code, the one coding agent set up here, is configured is in [docs/AGENT_TOOLS.md](docs/AGENT_TOOLS.md).
+
+## License
+[MIT](LICENSE). Files that came from the [agentic-repo-template](https://github.com/xms61/agentic-repo-template) are also under its [Apache License 2.0](LICENSES/Apache-2.0.txt).
