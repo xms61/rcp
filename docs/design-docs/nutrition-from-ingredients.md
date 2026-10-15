@@ -1,6 +1,6 @@
 ---
 status: draft
-last-verified: 2026-10-14
+last-verified: 2026-10-15
 ---
 
 # Nutrition computed from ingredients
@@ -32,3 +32,9 @@ Rejected:
 - Whether BLS 4.0 has English names. If it doesn't, the import needs a translation step.
 - A unit that a food has no portion weight for, and an ingredient line with no food linked ("salt to taste"): nutrition shows as incomplete and names the lines it could not count, rather than silently leaving them out.
 - Which nutrients the recipe page shows by default. All nutrients a source provides are stored.
+- **One serving is defined per recipe** (decided 2026-10-15 in the design round; [apps/mobile/PRODUCT.md](../../apps/mobile/PRODUCT.md)). It is one of:
+  - a share of the recipe, the "divided by its servings" rule above;
+  - a fixed weight of the finished dish;
+  - pieces.
+
+  The app also shows nutrition per 100 g and for the whole recipe. A fixed-weight serving and the per-100 g view both need the finished dish's weight, which cooking changes, so it can't be summed from the ingredients. The schema must store it, entered by the owner.
