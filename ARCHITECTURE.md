@@ -13,6 +13,7 @@ RCP is an Android app (React Native with Expo) for its owner's phone. It talks o
 | `packages/domain/` | `@rcp/domain`: recipe logic in plain TypeScript, such as converting amounts to grams, for both the app and the API |
 | `apps/api/` | `@rcp/api`: the Hono API on the VPS. `app.ts` holds the routes, `config.ts` reads the environment, `main.ts` serves. esbuild bundles it into one file for its image (`apps/api/Dockerfile`). The database and food imports come later |
 | `apps/mobile/` | `@rcp/mobile`: the Expo app for Android (SDK 57, Expo Router). Screens live in `src/app/`; `src/connection/` holds the API address and token (secure storage), the URL check and the connection test. Its own rules: [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md) |
+| `deploy/` | What runs on the VPS: `compose.yml` for the API on the shared `edge` network, `rcp.caddy` for ysto's Caddy, and the `.env` template ([DEPLOY.md](docs/DEPLOY.md)). `.github/workflows/release.yml` publishes the image |
 | `scripts/` | Repo tooling: the doc and tracked-file checks, the lint-rule tests, the agent guard hook, setup |
 | `docs/` | The system of record ([KNOWLEDGE_BASE.md](docs/KNOWLEDGE_BASE.md)) |
 

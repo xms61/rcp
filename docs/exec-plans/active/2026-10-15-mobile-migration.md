@@ -36,6 +36,8 @@ RCP becomes an Android app on the owner's phone, talking to an API on their Hetz
 - 2026-10-15: One pnpm workspace: `apps/mobile`, `apps/api`, `packages/domain`. Vitest tests the domain and API, jest-expo the app.
 - 2026-10-15: The API runs with `tsx` in development and is bundled by esbuild for its image, approved with Hono and `@hono/node-server`. The image needs no `node_modules`, and imports keep no file extensions. Rejected: compiling with tsc as BeanQuery does, which needs `.js` extensions on every import and a built domain package.
 - 2026-10-15: Every route except `/healthz` sits under `/api` behind Hono's `bearerAuth`, which compares in constant time.
+- 2026-10-15: UI designs are made in Penpot through its MCP server, the owner's choice; the app's screens follow those designs once they exist.
+- 2026-10-15: The API's service on `edge` is named `rcp`, not `api`, because service names on a shared Docker network share one DNS namespace with the other apps'. Caddy adds HSTS for the site, since the API sets no headers itself. The release workflow is BeanQuery's, building `apps/api/Dockerfile`; CI gained a `workflow_call` trigger so the release can rerun it.
 - 2026-10-15: The app starts from Expo's blank-typescript template (SDK 57) with Expo Router, `expo-secure-store`, jest-expo and React Native Testing Library, approved by the owner. Its Android id is `com.xms61.rcp`, its link scheme `rcp`, and backups are off. The address and token are saved only once the API accepts them. The template's `.claude/settings.json`, which turned on an Expo plugin for Claude Code, was dropped as unrequested agent config; its AGENTS.md was rewritten for RCP (local Gradle builds, not EAS).
 
 ## Surprises

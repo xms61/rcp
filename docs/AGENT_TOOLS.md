@@ -34,6 +34,9 @@ Left out on purpose; the reasons are in the bootstrap plan's Decision log. The [
 - **Claude GitHub workflows** (`@claude` in issues and AI review of pull requests in CI): they need an `ANTHROPIC_API_KEY` repository secret.
 - **Other coding agents** (OpenAI Codex, GitHub Copilot, Gemini CLI, Cursor). Adding one means its own config, and moving the skills to `.agents/skills/` with a mirror into `.claude/skills/`, as the template does.
 
+## Design tool
+UI designs are made in Penpot through the Penpot MCP server (`mcp__penpot__*` tools), set up in the owner's Claude Code config rather than in this repo. Read its `high_level_overview` before using it.
+
 ## Optional additions
 - **MCP servers:** add them in `.mcp.json` and give each the narrowest scope that works. Every server's tools cost context, and every server is code you run.
 - **Agent telemetry:** to see sessions, cost and tool calls, Claude Code exports OpenTelemetry when `CLAUDE_CODE_ENABLE_TELEMETRY=1` and an OTLP endpoint are set. Put them in user or managed settings, not the repo, and leave prompt and tool-content logging off: it sends source code to the telemetry backend.
