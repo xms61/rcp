@@ -1,6 +1,6 @@
 ---
 status: draft
-last-verified: 2026-10-14
+last-verified: 2026-10-15
 ---
 
 # Testing
@@ -40,4 +40,4 @@ Once the app runs, it gets a project skill, `.claude/skills/verify-<app>/`, that
 Prove the skill once before relying on it: launch, doctor, drive one feature, capture evidence, clean up, and check that the evidence is still there. The [doc-gardening pass](../.claude/skills/doc-gardening/SKILL.md) drives every feature in the map again and fixes the skill where it has drifted. A library can skip the skill: its tests already call it the way its users do.
 
 ## Repo scripts
-The checks in `scripts/` have their own tests, next to each script as `*.test.mjs`, run by `pnpm test:scripts` (Node's built-in test runner). The rules that [eslint.config.js](../eslint.config.js) adds are tested there too, in `scripts/lint-rules.test.mjs`. They build their fixtures in temp directories. CI runs `pnpm verify` on Linux only, as the required check: RCP is a web app, so nothing is tested per operating system.
+The checks in `scripts/` have their own tests, next to each script as `*.test.mjs`, run by `pnpm test:scripts` (Node's built-in test runner). The rules that [eslint.config.js](../eslint.config.js) adds are tested there too, in `scripts/lint-rules.test.mjs`. They build their fixtures in temp directories. CI runs `pnpm verify` on Linux only, as the required check: the API runs in a Linux container and the Android app is built on the owner's PC, so nothing is tested per operating system.

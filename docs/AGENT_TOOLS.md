@@ -1,6 +1,6 @@
 ---
 status: draft
-last-verified: 2026-10-14
+last-verified: 2026-10-15
 ---
 
 # Agent tools
