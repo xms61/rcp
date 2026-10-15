@@ -29,11 +29,10 @@ This file is the map, not the manual: it says which doc to read for which task. 
 | Skills | Edit `.claude/skills/` |
 | Tests of the repo scripts | `pnpm test:scripts` |
 | Install | `pnpm install` |
-| Run locally | `pnpm dev`, then open http://localhost:3000 |
+| Run locally | Nothing runs yet: the API and the Android app arrive with the [migration plan](docs/exec-plans/active/2026-10-15-mobile-migration.md) |
 | Lint and format | `pnpm lint`; `pnpm format` writes, `pnpm format:check` only checks |
 | Typecheck | `pnpm typecheck` |
-| Tests, all and one file | `pnpm test`; `pnpm test src/domain/units.test.ts` |
-| Production build | `pnpm build` (also regenerates `src/routeTree.gen.ts`) |
+| Tests, all and one file | `pnpm test`; `pnpm --filter @rcp/domain test src/units.test.ts` |
 
 ## How to work
 1. Read the docs your task needs. For work that spans sessions or areas, create or resume an exec plan first ([PLANS.md](docs/PLANS.md)).

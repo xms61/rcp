@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  // rootDir keeps the package self-contained: tsc fails on an import that reaches outside src/.
+  "compilerOptions": {
+    "rootDir": "src",
+    "types": []
+  },
+  "include": ["src"]
+}
