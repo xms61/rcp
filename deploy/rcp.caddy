@@ -1,0 +1,11 @@
+# RCP's site for ysto's Caddy (docs/DEPLOY.md). Copied to the VPS's Caddy sites folder with the real domain in place of
+# rcp.example.org. Caddy gets and renews the certificate and redirects HTTP to HTTPS. No access log is configured, so
+# no client address or Authorization header is written, as long as ysto's global Caddy options add no `log`.
+rcp.example.org {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+	reverse_proxy rcp:3000
+}

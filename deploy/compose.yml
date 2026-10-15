@@ -1,0 +1,30 @@
+# The API on the VPS (docs/DEPLOY.md). ysto's Caddy serves HTTPS for every app on the VPS: it joins the shared `edge`
+# network and imports deploy/rcp.caddy, so this app publishes no port. This folder is copied to /opt/rcp on the VPS,
+# with a .env made from .env.example beside it.
+name: rcp
+
+services:
+  # Named `rcp`, not `api`: service names share one DNS namespace on `edge` with the other apps' services.
+  rcp:
+    image: ghcr.io/xms61/rcp:${RCP_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    # Set here, so a .env copied from a development machine can't point the API elsewhere.
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+    networks: [edge]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    mem_limit: 256m
+    pids_limit: 128
+    logging:
+      driver: json-file
+      options: { max-size: 10m, max-file: '3' }
+
+networks:
+  # Created once with `docker network create edge` (BeanQuery's and ysto's runbooks); ysto's Caddy joins it too.
+  edge:
+    external: true
