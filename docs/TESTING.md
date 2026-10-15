@@ -15,7 +15,7 @@ last-verified: 2026-10-15
 - A behavior that a unit test can't reach (a UI flow, a deploy) gets an end-to-end check the agent can run itself, such as a browser test or a run of the [verification skill](#verification-skill).
 
 ## Stack
-- `pnpm test` runs each workspace package's own `test` script. **Vitest** tests `packages/domain`, and will test `apps/api`; **jest-expo** with React Native Testing Library will test `apps/mobile` ([migration plan](exec-plans/active/2026-10-15-mobile-migration.md)). Tests sit next to the code they test. For one file: `pnpm --filter @rcp/domain test src/units.test.ts`. There is no coverage threshold.
+- `pnpm test` runs each workspace package's own `test` script. **Vitest** tests `packages/domain` and `apps/api`, whose tests call the Hono app in memory through `app.request()`, with no server or port; **jest-expo** with React Native Testing Library will test `apps/mobile` ([migration plan](exec-plans/active/2026-10-15-mobile-migration.md)). Tests sit next to the code they test. For one file: `pnpm --filter @rcp/domain test src/units.test.ts`. There is no coverage threshold.
 - Logic that needs no I/O goes in `packages/domain` ([ARCHITECTURE.md](../ARCHITECTURE.md#layers)) and is tested there with literal values.
 - There are no device or end-to-end tests yet. The first user-facing feature brings the [verification skill](#verification-skill), which drives the running app ([tech-debt tracker](exec-plans/tech-debt-tracker.md)).
 

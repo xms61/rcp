@@ -19,7 +19,7 @@ RCP becomes an Android app on the owner's phone, talking to an API on their Hetz
 
 ## Progress
 - [x] 2026-10-15 Workspace: domain package, web app removed
-- [ ] API skeleton with token auth and image
+- [x] 2026-10-15 API skeleton with token auth and image
 - [ ] App skeleton that stores the token and reaches the API; APK installed
 - [ ] Deployed on the VPS behind ysto's Caddy
 - [ ] Docs describe the mobile app and API
@@ -34,8 +34,12 @@ RCP becomes an Android app on the owner's phone, talking to an API on their Hetz
 - 2026-10-15: Backups stay on the VPS (a nightly local copy, as BeanQuery's), by the owner's choice: a lost server loses them too.
 - 2026-10-15: The APK is built locally with Gradle and installed only on the owner's devices; development uses Expo Go. Rejected: EAS cloud builds, store publishing.
 - 2026-10-15: One pnpm workspace: `apps/mobile`, `apps/api`, `packages/domain`. Vitest tests the domain and API, jest-expo the app.
+- 2026-10-15: The API runs with `tsx` in development and is bundled by esbuild for its image, approved with Hono and `@hono/node-server`. The image needs no `node_modules`, and imports keep no file extensions. Rejected: compiling with tsc as BeanQuery does, which needs `.js` extensions on every import and a built domain package.
+- 2026-10-15: Every route except `/healthz` sits under `/api` behind Hono's `bearerAuth`, which compares in constant time.
 
 ## Surprises
+- 2026-10-15: Hono's `bearerAuth` answers 400, not 401, to an `Authorization` header in another scheme (`Basic …`); the API test asserts that.
+- 2026-10-15: pnpm blocked esbuild's install script until `allowBuilds` listed it in `pnpm-workspace.yaml`.
 
 ## Validation
 `pnpm verify` passes with all three parts' checks; the APK on the owner's phone shows a successful authenticated call to `https://<domain>` on the VPS.

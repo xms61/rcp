@@ -9,6 +9,12 @@ updates:
       actions:
         patterns: ['*']
 
+  # The API image's pinned base (apps/api/Dockerfile), so Node and alpine security fixes arrive as PRs.
+  - package-ecosystem: docker
+    directory: /apps/api
+    schedule:
+      interval: weekly
+
   # Minor and patch updates arrive as one grouped PR; each major gets its own. `npm` is Dependabot's name for
   # the JavaScript ecosystem; it updates pnpm-lock.yaml too.
   - package-ecosystem: npm
