@@ -12,6 +12,7 @@ Claude Code is the only coding agent set up in this repo. It reads [AGENTS.md](.
 | :-- | :-- |
 | [.claude/settings.json](../.claude/settings.json) | Shared permissions, sandbox and the guard hook. Personal overrides go in `.claude/settings.local.json`, which git ignores |
 | [.claude/agents/reviewer.md](../.claude/agents/reviewer.md) | Fresh-context review subagent, which reports by [REVIEW.md](../REVIEW.md) |
+| [.claude/agents/security-reviewer.md](../.claude/agents/security-reviewer.md) | The second review, for security only, after `reviewer` on any change to code, dependencies, deploy files or agent and CI config. Its checklist follows the OWASP Top 10:2025, API Security Top 10:2023 and Mobile Top 10:2024, applied to RCP's token, API, image and Android app; update it when the threat model changes |
 | `.claude/skills/` | Procedures loaded on demand: [exec-plan](../.claude/skills/exec-plan/SKILL.md), [doc-gardening](../.claude/skills/doc-gardening/SKILL.md), [diagnosing-bugs](../.claude/skills/diagnosing-bugs/SKILL.md), and [retro](../.claude/skills/retro/SKILL.md), which runs only when someone asks for it (`disable-model-invocation` in its frontmatter) |
 | [scripts/agent-hooks/guard-tool-use.mjs](../scripts/agent-hooks/guard-tool-use.mjs) | Blocks edits to `.env`, keys, lockfiles and `.git/`, and commands that skip hooks, force-push or touch `.env` |
 

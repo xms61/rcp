@@ -9,6 +9,7 @@
 - [ ] Docs that describe changed behavior are updated, with a new `last-verified`
 - [ ] Exec plan progress and decision log updated, or the plan moved to `completed/` (if the work has one; a ticket's pull request updates only the decision log)
 - [ ] No secrets, `.env` files or `docs/scratch/` staged
+- [ ] `reviewer` ran, and `security-reviewer` too when the change touches code, dependencies, deploy files or agent and CI config; its findings are fixed or answered here
 
 ## Human review
 <!-- What a person checked by hand, and which changes still need a human reviewer (REVIEW.md lists them). Who wrote the change is already in the commits and the agent's own attribution; don't restate it here. -->
