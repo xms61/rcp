@@ -1,6 +1,6 @@
 ---
 status: draft
-last-verified: 2026-10-14
+last-verified: 2026-10-15
 ---
 
 # Design docs
@@ -18,3 +18,4 @@ If any is missing, skip the doc; an exec plan's decision log is enough for small
 | :-- | :-- | :-- |
 | [Core beliefs](core-beliefs.md) | draft | How the repo is run so that agents can do most of the work safely |
 | [Nutrition computed from ingredients](nutrition-from-ingredients.md) | draft | Recipe nutrition is summed from foods linked to each ingredient line; the food sources, units and overlap rule |
+| [An Android app with the data on the VPS](mobile-app-and-api.md) | draft | Expo app for Android, Hono API and SQLite on the owner's VPS, token auth, deployed like BeanQuery |
