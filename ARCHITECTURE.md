@@ -28,5 +28,5 @@ ESLint enforces the domain boundary (`no-restricted-imports` in [eslint.config.j
 - `packages/domain` imports nothing outside its own `src/`: ESLint `no-restricted-imports`, and tsc's `rootDir`.
 - No test is skipped or focused in committed code: ESLint, `vitest/no-disabled-tests` and `vitest/no-focused-tests`.
 - `apps/mobile` never imports `apps/api`'s code: ESLint `no-restricted-imports`.
-- The app keeps the API token only in `expo-secure-store`, and sends it only in the `Authorization` header to an `https://` address (http only in development builds): `apps/mobile/src/connection/`, tested there.
+- The app keeps the API token only in `expo-secure-store`, and sends it only in the `Authorization` header to an `https://` address (http only in development builds), and only to the address it was saved for: `apps/mobile/src/connection/`, tested there.
 - Every API route except `/healthz` sits under `/api` and needs the bearer token: Hono's `bearerAuth` on `/api/*` in `apps/api/src/app.ts`, tested in `app.test.ts`, including an unknown route.

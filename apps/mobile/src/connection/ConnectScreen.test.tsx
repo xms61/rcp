@@ -66,6 +66,43 @@ describe('ConnectScreen', () => {
     expect(saved()).toBeNull();
   });
 
+  test('tests the saved token again when the token field is left empty', async () => {
+    const { check } = await renderScreen({ kind: 'connected' }, { url: 'https://rcp.example.org', token });
+    await screen.findByDisplayValue('https://rcp.example.org');
+    await userEvent.setup().press(screen.getByRole('button', { name: 'Save and test' }));
+    expect(await screen.findByText('Connected to the API.')).toBeOnTheScreen();
+    expect(check).toHaveBeenCalledWith('https://rcp.example.org', token);
+  });
+
+  test('never sends the saved token to a different address', async () => {
+    const { check } = await renderScreen({ kind: 'connected' }, { url: 'https://rcp.example.org', token });
+    const address = await screen.findByDisplayValue('https://rcp.example.org');
+    const user = userEvent.setup();
+    await user.clear(address);
+    await user.type(address, 'https://attacker.example');
+    await user.press(screen.getByRole('button', { name: 'Save and test' }));
+    expect(await screen.findByText('Enter the API token.')).toBeOnTheScreen();
+    expect(check).not.toHaveBeenCalled();
+  });
+
+  test('asks for a token when none is entered or saved, and sends nothing', async () => {
+    const { check } = await renderScreen({ kind: 'connected' });
+    await fillAndSave('https://rcp.example.org', '   ');
+    expect(await screen.findByText('Enter the API token.')).toBeOnTheScreen();
+    expect(check).not.toHaveBeenCalled();
+  });
+
+  test('says when the token could not be saved, and lets the owner try again', async () => {
+    const memory = memoryStore();
+    const store = { ...memory.store, save: () => Promise.reject(new Error('keystore unavailable')) };
+    await render(
+      <ConnectScreen store={store} check={() => Promise.resolve({ kind: 'connected' })} allowHttp={false} />,
+    );
+    await fillAndSave('https://rcp.example.org', token);
+    expect(await screen.findByText('Connected, but the phone could not save the token. Try again.')).toBeOnTheScreen();
+    expect(screen.getByRole('button', { name: 'Save and test' })).toBeEnabled();
+  });
+
   test('shows the saved address, but never the saved token', async () => {
     await renderScreen({ kind: 'connected' }, { url: 'https://rcp.example.org', token });
     expect(await screen.findByDisplayValue('https://rcp.example.org')).toBeOnTheScreen();

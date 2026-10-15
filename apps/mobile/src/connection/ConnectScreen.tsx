@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { ConnectionCheck } from './check';
-import type { ConnectionStore } from './store';
+import type { ConnectionStore, SavedConnection } from './store';
 import { parseApiUrl } from './url';
 
 interface Props {
@@ -27,7 +27,7 @@ function describe(result: ConnectionCheck): string {
 export function ConnectScreen({ store, check, allowHttp }: Props) {
   const [url, setUrl] = useState('');
   const [token, setToken] = useState('');
-  const [savedToken, setSavedToken] = useState<string | null>(null);
+  const [saved, setSaved] = useState<SavedConnection | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -35,7 +35,7 @@ export function ConnectScreen({ store, check, allowHttp }: Props) {
     void store.load().then((saved) => {
       if (!saved) return;
       setUrl(saved.url);
-      setSavedToken(saved.token);
+      setSaved(saved);
     });
   }, [store]);
 
@@ -45,21 +45,30 @@ export function ConnectScreen({ store, check, allowHttp }: Props) {
       setMessage(parsed.error);
       return;
     }
-    const tokenToUse = token.trim() || savedToken;
+    // The saved token goes only to the address it was saved for: re-pointing the app must not hand it to a new host.
+    const tokenToUse = token.trim() || (saved?.url === parsed.url ? saved.token : null);
     if (!tokenToUse) {
       setMessage('Enter the API token.');
       return;
     }
     setBusy(true);
     setMessage(null);
-    const result = await check(parsed.url, tokenToUse);
-    if (result.kind === 'connected') {
-      await store.save({ url: parsed.url, token: tokenToUse });
-      setSavedToken(tokenToUse);
-      setToken('');
+    try {
+      const result = await check(parsed.url, tokenToUse);
+      if (result.kind === 'connected') {
+        try {
+          await store.save({ url: parsed.url, token: tokenToUse });
+        } catch {
+          setMessage('Connected, but the phone could not save the token. Try again.');
+          return;
+        }
+        setSaved({ url: parsed.url, token: tokenToUse });
+        setToken('');
+      }
+      setMessage(describe(result));
+    } finally {
+      setBusy(false);
     }
-    setMessage(describe(result));
-    setBusy(false);
   }
 
   return (
@@ -88,7 +97,7 @@ export function ConnectScreen({ store, check, allowHttp }: Props) {
         autoCapitalize="none"
         autoCorrect={false}
       />
-      {savedToken ? <Text style={styles.hint}>A token is saved. Enter a new one to replace it.</Text> : null}
+      {saved ? <Text style={styles.hint}>A token is saved. Enter a new one to replace it.</Text> : null}
       <Pressable role="button" style={styles.button} onPress={() => void saveAndTest()} disabled={busy}>
         <Text style={styles.buttonText}>Save and test</Text>
       </Pressable>
