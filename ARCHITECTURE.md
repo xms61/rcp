@@ -5,7 +5,7 @@ last-verified: 2026-10-14
 
 # Architecture
 
-RCP is one [TanStack Start](https://tanstack.com/start) app (React, TypeScript) served by one Node process, on the owner's PC for now. Pages render on the server and hydrate in the browser. Recipes will live in one SQLite file, reached through Drizzle ORM, and nutrition is computed from each recipe's ingredients ([design doc](docs/design-docs/nutrition-from-ingredients.md)). Why these choices: the bootstrap plan's [decision log](docs/exec-plans/active/bootstrap.md#decision-log).
+RCP is one [TanStack Start](https://tanstack.com/start) app (React, TypeScript) served by one Node process, on the owner's PC for now. Pages render on the server and hydrate in the browser. Recipes will live in one SQLite file, reached through Drizzle ORM, and nutrition is computed from each recipe's ingredients ([design doc](docs/design-docs/nutrition-from-ingredients.md)). Why these choices: the bootstrap plan's [decision log](docs/exec-plans/completed/bootstrap.md#decision-log).
 
 ## Code map
 | Path | Holds |

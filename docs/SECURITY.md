@@ -55,4 +55,4 @@ No agent runs in CI: the Claude workflows were left out ([AGENT_TOOLS.md](AGENT_
 - Dependabot keeps actions and packages current; review its PRs like any other, and check that a new action SHA is the release tag it claims. Dependabot alerts and security updates are repository settings: turn them on, so a known vulnerability in a dependency raises an alert and a fix PR.
 
 ## Reporting a vulnerability
-TODO(template): how to report one (a SECURITY policy on GitHub, or a contact address).
+Report it privately through GitHub: on the repository's **Security** tab, choose **Report a vulnerability** ([private vulnerability reporting](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability), turned on 2026-10-15). Don't open a public issue for it. RCP is a personal project run by one person, so there is no response-time promise.
