@@ -5,8 +5,8 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(
-  // scripts/ is plain Node tooling with its own tests.
-  globalIgnores(['**/dist/', 'scripts/']),
+  // scripts/ is plain Node tooling with its own tests. Expo generates .expo/ and the native android/ folder.
+  globalIgnores(['**/dist/', 'scripts/', 'apps/mobile/.expo/', 'apps/mobile/android/', 'apps/mobile/expo-env.d.ts']),
   js.configs.recommended,
   tseslint.configs.strictTypeChecked,
   {
@@ -41,6 +41,24 @@ export default defineConfig(
               regex: '^(?!\\.\\.?/)',
               message:
                 'packages/domain imports nothing but its own files: no packages, Node APIs or apps. Do the I/O in apps/api or apps/mobile and pass plain values into the domain function.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    // ARCHITECTURE.md: the app reaches the server only over HTTP, so the API's code never ships in the APK.
+    files: ['apps/mobile/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '^@rcp/api(/|$)|(^|/)api/src(/|$)',
+              message:
+                'apps/mobile may not import apps/api: call its HTTP routes instead, and put logic both need in packages/domain.',
             },
           ],
         },
