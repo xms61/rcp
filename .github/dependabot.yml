@@ -19,3 +19,7 @@ updates:
       npm:
         patterns: ['*']
         update-types: ['minor', 'patch']
+    ignore:
+      # @types/node follows the Node major in .nvmrc (24); move both together, by hand.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
