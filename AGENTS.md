@@ -31,7 +31,7 @@ This file is the map, not the manual: it says which doc to read for which task. 
 | Skills | Edit `.claude/skills/` |
 | Tests of the repo scripts | `pnpm test:scripts` |
 | Install | `pnpm install` |
-| Run locally | The API: `pnpm --filter @rcp/api dev`, with `RCP_API_TOKEN` in `.env` ([.env.example](.env.example)). The Android app arrives with the [migration plan](docs/exec-plans/active/2026-10-15-mobile-migration.md) |
+| Run locally | The API: `pnpm --filter @rcp/api dev`, with `RCP_API_TOKEN` in `.env` ([.env.example](.env.example)). The Android app: `pnpm --filter @rcp/mobile start` with Expo Go; its other commands, the APK build included, are in [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md) |
 | API bundle and image | `pnpm --filter @rcp/api build`; `docker build -f apps/api/Dockerfile .` |
 | Lint and format | `pnpm lint`; `pnpm format` writes, `pnpm format:check` only checks |
 | Typecheck | `pnpm typecheck` |

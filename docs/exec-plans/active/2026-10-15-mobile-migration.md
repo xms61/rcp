@@ -22,7 +22,7 @@ RCP becomes an Android app on the owner's phone, talking to an API on their Hetz
 - [x] 2026-10-15 API skeleton with token auth and image
 - [ ] App skeleton that stores the token and reaches the API; APK installed
 - [ ] Deployed on the VPS behind ysto's Caddy
-- [ ] Docs describe the mobile app and API
+- [x] 2026-10-15 Docs describe the mobile app and API. DEPLOY.md stays `draft` until its first run on the VPS
 
 ## Decision log
 - 2026-10-15: RCP is a pure mobile app, for Android only, replacing the TanStack Start web app. Rejected: iOS (needs a Mac or cloud builds and a paid developer account).
