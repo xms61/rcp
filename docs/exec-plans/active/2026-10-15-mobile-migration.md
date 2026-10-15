@@ -37,6 +37,12 @@ RCP becomes an Android app on the owner's phone, talking to an API on their Hetz
 - 2026-10-15: The API runs with `tsx` in development and is bundled by esbuild for its image, approved with Hono and `@hono/node-server`. The image needs no `node_modules`, and imports keep no file extensions. Rejected: compiling with tsc as BeanQuery does, which needs `.js` extensions on every import and a built domain package.
 - 2026-10-15: Every route except `/healthz` sits under `/api` behind Hono's `bearerAuth`, which compares in constant time.
 - 2026-10-15: UI designs are made in Penpot through its MCP server, the owner's choice; the app's screens follow those designs once they exist.
+- 2026-10-15: The owner put design first and parked milestone 4: the VPS deploy waits. The product record is [apps/mobile/PRODUCT.md](../../../apps/mobile/PRODUCT.md).
+  - The visual direction is minimal, after Cookwell's recipe page: colored labels, one swappable orange accent, and small animations.
+  - The owner rejected two rolled sets of themed directions.
+  - The direction contract is in `apps/mobile/.impeccable/surfaces/src-app-recipe.md`. The Penpot file is "RCP" on design.penpot.app, reached through Penpot's hosted MCP server.
+  - Nine screens are drawn. The visual system is in [apps/mobile/DESIGN.md](../../../apps/mobile/DESIGN.md).
+  - During the round the owner added these to the product: amounts in the steps, a per-recipe serving definition, ratings (taste, difficulty, price), and an include/exclude ingredient filter. They need schema and API work in the database plan.
 - 2026-10-15: The API's service on `edge` is named `rcp`, not `api`, because service names on a shared Docker network share one DNS namespace with the other apps'. Caddy adds HSTS for the site, since the API sets no headers itself. The release workflow is BeanQuery's, building `apps/api/Dockerfile`; CI gained a `workflow_call` trigger so the release can rerun it.
 - 2026-10-15: The app starts from Expo's blank-typescript template (SDK 57) with Expo Router, `expo-secure-store`, jest-expo and React Native Testing Library, approved by the owner. Its Android id is `com.xms61.rcp`, its link scheme `rcp`, and backups are off. The address and token are saved only once the API accepts them. The template's `.claude/settings.json`, which turned on an Expo plugin for Claude Code, was dropped as unrequested agent config; its AGENTS.md was rewritten for RCP (local Gradle builds, not EAS).
 
