@@ -19,7 +19,7 @@ RCP becomes an Android app on the owner's phone, talking to an API on their Hetz
 
 ## Progress
 - [x] 2026-10-15 Workspace: domain package, web app removed
-- [ ] API skeleton with token auth and image
+- [x] 2026-10-15 API skeleton with token auth and image
 - [ ] App skeleton that stores the token and reaches the API; APK installed
 - [ ] Deployed on the VPS behind ysto's Caddy
 - [ ] Docs describe the mobile app and API

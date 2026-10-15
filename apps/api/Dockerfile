@@ -16,10 +16,12 @@ COPY apps/api/src apps/api/src
 RUN pnpm --filter @rcp/api build
 
 FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f
-# The API needs no package manager, and the ones in the base image carry their own vulnerabilities.
+# The API needs no package manager, and the ones in the base image carry their own vulnerabilities. apk goes too,
+# once tini is in.
 RUN apk add --no-cache tini \
   && rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack /opt/yarn-* \
-    /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg
+    /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg \
+    /sbin/apk /etc/apk /lib/apk /usr/share/apk /var/cache/apk
 WORKDIR /app
 # HOST is for the container's network: only Caddy, on the shared network, reaches the port.
 ENV NODE_ENV=production \
