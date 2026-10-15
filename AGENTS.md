@@ -18,6 +18,7 @@ This file is the map, not the manual: it says which doc to read for which task. 
 | [docs/AGENT_TOOLS.md](docs/AGENT_TOOLS.md) | Changing agent config: skills, hooks, permissions, agent workflows |
 | [docs/KNOWLEDGE_BASE.md](docs/KNOWLEDGE_BASE.md) | Adding, moving or checking a doc, or gardening the docs |
 | [REVIEW.md](REVIEW.md) | Reviewing a pull request |
+| [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md) | Working on the Android app: Expo SDK rules, its commands, building the APK |
 
 ## Commands
 | Task | Command |

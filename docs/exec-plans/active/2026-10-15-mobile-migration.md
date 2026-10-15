@@ -36,10 +36,14 @@ RCP becomes an Android app on the owner's phone, talking to an API on their Hetz
 - 2026-10-15: One pnpm workspace: `apps/mobile`, `apps/api`, `packages/domain`. Vitest tests the domain and API, jest-expo the app.
 - 2026-10-15: The API runs with `tsx` in development and is bundled by esbuild for its image, approved with Hono and `@hono/node-server`. The image needs no `node_modules`, and imports keep no file extensions. Rejected: compiling with tsc as BeanQuery does, which needs `.js` extensions on every import and a built domain package.
 - 2026-10-15: Every route except `/healthz` sits under `/api` behind Hono's `bearerAuth`, which compares in constant time.
+- 2026-10-15: The app starts from Expo's blank-typescript template (SDK 57) with Expo Router, `expo-secure-store`, jest-expo and React Native Testing Library, approved by the owner. Its Android id is `com.xms61.rcp`, its link scheme `rcp`, and backups are off. The address and token are saved only once the API accepts them. The template's `.claude/settings.json`, which turned on an Expo plugin for Claude Code, was dropped as unrequested agent config; its AGENTS.md was rewritten for RCP (local Gradle builds, not EAS).
 
 ## Surprises
 - 2026-10-15: Hono's `bearerAuth` answers 400, not 401, to an `Authorization` header in another scheme (`Basic …`); the API test asserts that.
 - 2026-10-15: pnpm blocked esbuild's install script until `allowBuilds` listed it in `pnpm-workspace.yaml`.
+- 2026-10-15: `expo install` asked for Expo patches published the night before, and pnpm 12 answered by adding a `minimumReleaseAgeExclude` list for eleven packages to `pnpm-workspace.yaml`, then refused the lockfile once the list was removed. The fix: restore main's lockfile, loosen the ranges to `~57.0.0`, and install again, which resolves patches at least a day old (expo 57.0.28). `expo install --check` asks for the newer patches until they age past a day.
+- 2026-10-15: React Native Testing Library 14 made `render` and every interaction async, and prefers `aria-*` props; `role="textbox"` doesn't typecheck on a React Native `TextInput`.
+- 2026-10-15: Claude Code reads nested `CLAUDE.md` files but not `AGENTS.md`, so `apps/mobile/CLAUDE.md` imports the app's AGENTS.md; the doc checks treat both as docs, with frontmatter.
 
 ## Validation
 `pnpm verify` passes with all three parts' checks; the APK on the owner's phone shows a successful authenticated call to `https://<domain>` on the VPS.

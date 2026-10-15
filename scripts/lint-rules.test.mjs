@@ -48,3 +48,19 @@ test('a skipped or focused test fails lint', async () => {
   assert.deepEqual(await ruleIds(skipped, 'packages/domain/src/units.test.ts'), ['vitest/no-disabled-tests']);
   assert.deepEqual(await ruleIds(focused, 'packages/domain/src/units.test.ts'), ['vitest/no-focused-tests']);
 });
+
+test('apps/mobile may not import the API, but may use the domain package and its own files', async () => {
+  const file = 'apps/mobile/src/connection/check.ts';
+  const blocked = async (specifier) =>
+    (await ruleIds(`import x from '${specifier}';\nexport const y = x;\n`, file)).includes('no-restricted-imports');
+  const specifiers = ['@rcp/api', '@rcp/api/src/app', '../../../api/src/app', '@rcp/domain', './url'];
+  const result = {};
+  for (const specifier of specifiers) result[specifier] = await blocked(specifier);
+  assert.deepEqual(result, {
+    '@rcp/api': true,
+    '@rcp/api/src/app': true,
+    '../../../api/src/app': true,
+    '@rcp/domain': false,
+    './url': false,
+  });
+});
