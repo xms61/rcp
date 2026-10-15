@@ -33,7 +33,7 @@ scp deploy/.env.example deploy@<server>:/opt/rcp/.env
 scp deploy/rcp.caddy deploy@<server>:/opt/caddy-sites/
 ```
 On the VPS:
-- Make the token and put it in `/opt/rcp/.env` without it passing through the terminal's history: `sed -i "s/^RCP_API_TOKEN=.*/RCP_API_TOKEN=$(openssl rand -hex 32)/" /opt/rcp/.env && chmod 600 /opt/rcp/.env`. Read it once to paste into the app (`grep RCP_API_TOKEN /opt/rcp/.env`), and keep it nowhere else.
+- Make the token and put it in `/opt/rcp/.env` without it passing through the terminal's history: `chmod 600 /opt/rcp/.env && sed -i "s/^RCP_API_TOKEN=.*/RCP_API_TOKEN=$(openssl rand -hex 32)/" /opt/rcp/.env`. The `chmod` comes first, so the file is never readable by others once it holds the token; `sed -i` keeps its mode. Read it once to paste into the app (`grep RCP_API_TOKEN /opt/rcp/.env`), and keep it nowhere else.
 - In `/opt/caddy-sites/rcp.caddy`, replace `rcp.example.org` with the domain: `sed -i 's/rcp.example.org/<domain>/' /opt/caddy-sites/rcp.caddy`. With the placeholder left in, HTTPS to the domain fails with `tlsv1 alert internal error`.
 
 ### 3. The image

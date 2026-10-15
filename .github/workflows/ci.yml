@@ -12,7 +12,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.ref }}
+  # The workflow name keeps the release's run of these checks (workflow_call, where it is "Release") apart from a
+  # push's run on main, so neither cancels the other.
+  group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

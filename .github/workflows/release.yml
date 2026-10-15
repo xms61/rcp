@@ -24,8 +24,9 @@ jobs:
     needs: ci
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # The build and push can write packages but not the repository; the tag and release come in the next job.
     permissions:
-      contents: write
+      contents: read
       packages: write
     env:
       VERSION: ${{ inputs.version }}
@@ -40,8 +41,15 @@ jobs:
         run: |
           test "$(node -p 'require("./package.json").version')" = "$VERSION"
           if gh release view "v$VERSION" > /dev/null 2>&1; then echo "v$VERSION is already released"; exit 1; fi
+      # The helper images are pinned by digest: by default these actions pull Docker Hub tags (binfmt:latest, which
+      # runs privileged, and buildkit:buildx-stable-1) that a hijacked tag could swap. Dependabot can't see these
+      # pins; bump them by hand with `docker buildx imagetools inspect <image>:<tag>`.
       - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
+        with:
+          image: docker.io/tonistiigi/binfmt:qemu-v10.2.3@sha256:400a4873b838d1b89194d982c45e5fb3cda4593fbfd7e08a02e76b03b21166f0
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+        with:
+          driver-opts: image=docker.io/moby/buildkit:v0.34.0@sha256:b059f8d7226d0b326bc871af489a5dddf65e36af4d20d14251b072974d9ee87c
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:
           registry: ghcr.io
@@ -62,7 +70,17 @@ jobs:
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.version=${{ env.VERSION }}
             org.opencontainers.image.revision=${{ github.sha }}
+
+  release:
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
       - name: Tag and GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ inputs.version }}
         run: gh release create "v$VERSION" --target "$GITHUB_SHA" --title "v$VERSION" --generate-notes
