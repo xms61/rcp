@@ -1,6 +1,6 @@
 # Review guidelines
 
-For AI reviewers (the `reviewer` subagent in `.claude/agents/`, and Claude Code Review) and for people. Keep it short: a long review brief dilutes the rules that matter.
+For AI reviewers (the `reviewer` and `security-reviewer` subagents in `.claude/agents/`, and Claude Code Review) and for people. `security-reviewer` adds an OWASP-based checklist for its own pass; these rules apply to both. Keep it short: a long review brief dilutes the rules that matter.
 
 ## Report
 - Only issues that matter: bugs, security problems, data loss, behavior the change claims but doesn't deliver, and new behavior without a test. Label each **P0** (must fix before merge) or **P1** (should fix before merge).
