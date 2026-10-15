@@ -2,8 +2,6 @@
 
 RCP is a recipe database: it keeps each recipe with its ingredient list, preparation steps, nutrients and the other details worth tracking. It is a personal tool for its owner, to collect, find and reuse recipes.
 
-New from the template? Follow [.github/README.md](.github/README.md), the template's own introduction, then delete it.
-
 ## Develop
 You need Node 22.12 or later (`.nvmrc` pins 24) and [pnpm](https://pnpm.io/installation). Any recent pnpm switches to the version that `packageManager` in `package.json` pins.
 

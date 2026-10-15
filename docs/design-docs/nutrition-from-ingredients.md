@@ -6,7 +6,7 @@ last-verified: 2026-10-14
 # Nutrition computed from ingredients
 
 ## Context
-RCP keeps recipes with their ingredients, steps and nutrients ([README](../../README.md)). Nutrition can be typed in per recipe from its source, or computed from what goes into it. The owner chose computed nutrition on 2026-10-14, in the [bootstrap interview](../exec-plans/active/bootstrap.md). No schema exists yet: the first feature that stores recipes designs it, from the rules below.
+RCP keeps recipes with their ingredients, steps and nutrients ([README](../../README.md)). Nutrition can be typed in per recipe from its source, or computed from what goes into it. The owner chose computed nutrition on 2026-10-14, in the [bootstrap interview](../exec-plans/completed/bootstrap.md). No schema exists yet: the first feature that stores recipes designs it, from the rules below.
 
 ## Decision
 - **Recipe nutrition is computed, never typed in.** Each ingredient line links to a food. A food has nutrients per 100 g, the line's amount is converted to grams, and the recipe's nutrition is the sum, divided by its servings.

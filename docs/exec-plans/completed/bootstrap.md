@@ -27,7 +27,7 @@ Turn the template into this project's repository: the stack chosen and set up, `
 - [x] Cloud agent setup updated (not applicable: no cloud agents)
 - [x] README.md, ARCHITECTURE.md, CODE_STYLE.md and TESTING.md filled in (2026-10-14)
 - [x] Verification skill written and proven on one feature, or deferred with a tech-debt row until the first user-facing feature (2026-10-14: deferred; the app has no feature yet)
-- [ ] No template placeholders left; `.github/README.md` deleted
+- [x] No template placeholders left; `.github/README.md` deleted (2026-10-15)
 
 ## Decision log
 - 2026-10-14: The project is RCP, a personal recipe database that tracks recipes with their ingredient lists, steps, nutrients and similar details. The owner is its user.
@@ -45,6 +45,7 @@ Turn the template into this project's repository: the stack chosen and set up, `
 - 2026-10-14: Nutrition is computed from ingredients linked to foods from USDA FoodData Central, CIQUAL, BLS 4.0 and the owner's own entries, in metric plus kitchen measures; overlapping foods are kept and picked per ingredient; names are in English except brand names. Details and rejected options: [design doc](../../design-docs/nutrition-from-ingredients.md).
 - 2026-10-14: pnpm is the package manager, the owner's call, pinned in `package.json` (`packageManager`), with its settings in `pnpm-workspace.yaml`. It replaces npm in the scripts, hooks, CI, agent permissions and docs. pnpm 12 skips versions published less than a day ago and blocks dependency build scripts not listed in `allowBuilds`.
 - 2026-10-14: ESLint and Prettier for lint and format, with TypeScript held at 6.0: typescript-eslint supports TypeScript below 6.1 only. Move to TypeScript 7 when it does. Rejected: Biome (no TanStack router rules, fewer type-aware rules) and oxlint (custom-rule plugins still alpha, weaker on Windows). Vitest runs the tests, since the app already builds with Vite.
+- 2026-10-15: Vulnerabilities are reported through GitHub's private vulnerability reporting, turned on for the repository, rather than a published email address.
 - 2026-10-14: This plan stops at the framework, tooling and one test. The database, schema and food imports come with the first feature that stores recipes, in a new exec plan.
 
 ## Surprises
@@ -56,4 +57,10 @@ Turn the template into this project's repository: the stack chosen and set up, `
 `pnpm verify` passes with the stack's checks included, `pnpm check:docs` prints no placeholder warnings, and CI is green on the pull request that finishes this plan. Once this plan moves to `completed/`, any placeholder left fails the doc checks.
 
 ## Outcome
-Filled in when the plan moves to completed/.
+Finished 2026-10-15. The repository is RCP's own: a TanStack Start app (React, TypeScript, pnpm) with ESLint, Prettier, TypeScript 6.0 and Vitest in `pnpm verify`, which CI runs on Linux as the required check ([#1](https://github.com/xms61/rcp/pull/1), [#2](https://github.com/xms61/rcp/pull/2)). Claude Code is the only agent, the docs describe the project, and no template placeholders are left. The owner's stack and data decisions are in the Decision log above and the [nutrition design doc](../../design-docs/nutrition-from-ingredients.md).
+
+Validation: `pnpm verify` passes and `pnpm check:docs` prints no placeholder warnings.
+
+Not done, as planned:
+- The database (SQLite through Drizzle and better-sqlite3), the schema and the food imports. They need their own exec plan, which starts with the open questions in the design doc.
+- The verification skill, until the first user-facing feature ([tech-debt tracker](../tech-debt-tracker.md)).
