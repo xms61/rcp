@@ -1,0 +1,8 @@
+# Only what apps/api/Dockerfile copies needs to reach the build; secrets and local state never do.
+**/node_modules
+**/dist
+.env
+.env.*
+.git
+.claude
+docs

@@ -1,3 +1,8 @@
 packages:
   - apps/*
   - packages/*
+
+# Dependencies whose install scripts may run; any other script fails the install (docs/CODE_STYLE.md).
+allowBuilds:
+  # Checks that its platform's binary was installed.
+  esbuild: true
