@@ -4,7 +4,7 @@ slug: "src-app-recipe"
 primary_target: "src/app/recipe"
 related_targets: ["src/app/index.tsx"]
 status: draft
-last-verified: 2026-10-15
+last-verified: 2026-10-16
 ---
 
 ## Scope
@@ -18,6 +18,16 @@ The recipe surface of the Android app and the screens around it. Mode: Operate. 
 7. Define a serving sheet: a share of the recipe, a fixed weight, or pieces.
 8. Filter: include and exclude ingredients, taste, difficulty, price, time and flavor.
 9. Include ingredients sheet: search and select. Exclude works the same way.
+10. Connect to server: the first run, or a changed token.
+11. Recipes, empty: the first run, with three ways to add a recipe.
+12. Recipes, offline: a banner; recipes saved on the phone still open.
+13. Import review: each parsed line, with its food or the reason it needs fixing.
+14. Link a food sheet: search across USDA, CIQUAL, BLS and own foods.
+15. Edit recipe: fields, rating, ingredient lines with labels, steps, and delete kept apart at the end.
+16. Settings: server, theme, accent color, amounts, cooking, offline copies.
+17. Recipes, filtered: the active filters as chips, and their count.
+
+Every screen also has a dark version, in the second row.
 
 ## Audience and task
 The owner, cooking at the stove (phone on the counter, glanced at from arm's length) or planning what to cook. Key states: servings scaled, ingredient and step ticked off, current step, timer running, nutrition incomplete, offline with a cached recipe.
@@ -54,4 +64,4 @@ Small and functional only: the tab underline slides, a tick fills its checkbox a
 - Which nutrients the Nutrition page lists by default (PRODUCT.md, undecided).
 - Tags or categories on the recipe list.
 - The rating scales (taste 1–5, difficulty in three steps, price € to €€€) are a first proposal.
-- Dark theme: not designed yet.
+- Error states beyond offline (a wrong token, a server error, a failed import), adding your own food, and tablet layouts: not designed yet.

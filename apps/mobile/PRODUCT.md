@@ -1,6 +1,6 @@
 ---
 status: draft
-last-verified: 2026-10-15
+last-verified: 2026-10-16
 ---
 
 # Product
@@ -27,7 +27,7 @@ Nutrition is computed from linked foods (USDA, CIQUAL, BLS and the owner's own f
 ## Operating Context
 - The data lives on the owner's VPS, behind an API with one token. The phone caches only recently opened recipes, so the recipe being cooked stays readable if the connection drops. Editing needs the server ([design doc](../../docs/design-docs/mobile-app-and-api.md)).
 - **Recipes come in three ways:** typed in by hand, imported from a recipe site's URL, or pasted as a block of text that is split into ingredient lines and steps.
-- **At the stove, a recipe:** scales its servings, recalculating every amount; ticks off ingredients and steps as they are done; keeps the screen on while it is open; and starts a timer from a step that names a duration.
+- **At the stove, a recipe:** scales its servings, recalculating every amount; ticks off ingredients and steps as they are done; keeps the screen on while its Steps page is open (a setting, on by default); and starts a timer from a step that names a duration.
 
 ## Capabilities and Constraints
 - Android only, built with Expo (React Native), installed from a locally built APK.
@@ -42,6 +42,17 @@ Nutrition is computed from linked foods (USDA, CIQUAL, BLS and the owner's own f
   - pieces (1 of 10 slices).
 
   Nutrition switches between per serving, per 100 g and the whole recipe. Scaling the servings changes the amounts, not the serving's size.
+- **Imports are checked before saving.** Each line shows its original text, the parsed amount and the linked food. A line with no food, or a unit with no portion weight, is flagged and fixed by linking a food or entering grams. When linking, overlapping foods from USDA, CIQUAL, BLS and the owner's own foods are shown separately with their source.
+- **Settings:**
+  - theme (system, light or dark);
+  - the accent color, from a few presets;
+  - kitchen measures under grams: the amount as entered stays first; a converted measure is an extra line under it;
+  - rounding scaled amounts;
+  - keeping the screen on in Steps (on by default);
+  - the server address and token;
+  - clearing the offline copies.
+
+  The amount and rounding options are a first proposal.
 - **Steps name each ingredient's amount in brackets**, such as "tomato paste (45 g)", scaled with the servings. The owner can follow the steps without swapping to the Ingredients page.
 - **Ingredient lines carry labels:**
   - a flavor role (salty, fat, acid, sweet, heat), set by hand;
