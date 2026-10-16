@@ -1,6 +1,6 @@
 ---
 status: draft
-last-verified: 2026-10-15
+last-verified: 2026-10-16
 ---
 
 # Security
@@ -11,6 +11,19 @@ last-verified: 2026-10-15
 - What keeps them out of agents' context: the guard hook (`scripts/agent-hooks/guard-tool-use.mjs`) and Claude Code's deny rules ([AGENT_TOOLS.md](AGENT_TOOLS.md)).
 - **The API token** (`RCP_API_TOKEN`, [design doc](design-docs/mobile-app-and-api.md)) is the one secret that unlocks all the data. It lives in `.env` on the development machine and on the VPS, and in the phone's secure storage; never in a log, a URL, a commit or a test fixture. The API refuses to start without one, or with one shorter than 32 characters. To rotate it, make a new one with `openssl rand -hex 32`, set it on the VPS, restart the API, and paste it into the app. The app stores it only with `expo-secure-store`, never in `app.json` or an `EXPO_PUBLIC_*` variable, which ship inside the APK. `android.allowBackup` is false, and the app refuses an `http://` API address outside development builds. The saved token is sent only to the address it was saved for: changing the address needs the token typed again, so a mistyped or hostile address never receives it. `app.json` grants only `INTERNET` and blocks the permissions Expo's libraries would add.
 - Committed files never reveal a developer's machine: no home-folder paths, user names or host names. Refer to locations by env var.
+
+## The API
+- **Recipe routes:** `GET` and `POST /api/recipes`, and `GET`, `PUT` and `DELETE /api/recipes/:id`. All of them need the token ([ARCHITECTURE.md](../ARCHITECTURE.md#invariants)).
+- **Input:**
+  - Each body and query is validated by a strict zod schema from `@rcp/domain`, with a cap on every length and count. Each id is validated by `idParam` in `app.ts`.
+  - Bodies over 1 MB answer 413; a recipe at every limit is about 400 KB.
+  - A write maps each validated field to its column by name, so an unknown field can't reach the database.
+- **SQL:** queries are built by Drizzle with bound parameters. Search and ingredient filters escape `%`, `_` and `\` in LIKE patterns.
+- **Errors:** an unexpected error answers 500 with no detail.
+  - The log gets the error's name and message, through `describeError` in `app.ts`.
+  - For a failed Drizzle query, it gets only the SQLite error, because a `DrizzleQueryError`'s message holds the bound values.
+  - Requests, headers, the token and recipe data are never logged. Tested in `app.test.ts` and `recipes.test.ts`.
+- **Search:** it folds case with JavaScript's Unicode-aware lower case, registered as SQLite's `fold()`, since SQLite's `lower()` and `LIKE` fold only ASCII.
 
 ## Coding agents on developer machines
 - Instructions are requests; boundaries are guarantees. Each must-never rule in AGENTS.md has a hook, permission, sandbox limit or check behind it where one is possible ([what enforces each one](#boundaries-and-what-enforces-them)).

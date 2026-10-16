@@ -22,7 +22,7 @@ try {
 }
 
 const server = serve(
-  { fetch: createApp({ token: config.token }).fetch, hostname: config.host, port: config.port },
+  { fetch: createApp({ token: config.token, db: database.db }).fetch, hostname: config.host, port: config.port },
   () => {
     console.log(`RCP API listening on http://${config.host}:${String(config.port)}`);
   },

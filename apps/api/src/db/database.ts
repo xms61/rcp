@@ -14,6 +14,11 @@ export function openDatabase(path: string, migrationsFolder: URL) {
   sqlite.pragma('journal_mode = WAL');
   sqlite.pragma('foreign_keys = ON');
   sqlite.pragma('busy_timeout = 5000');
+  // SQLite's lower() and LIKE fold ASCII letters only, so search compares fold(column) instead: JavaScript's
+  // Unicode-aware lower case, so "Äpfel" matches "äpfel" (src/db/recipes.ts).
+  sqlite.function('fold', { deterministic: true }, (value: unknown) =>
+    typeof value === 'string' ? value.toLowerCase() : value,
+  );
   const db = drizzle(sqlite, { schema });
   migrate(db, { migrationsFolder: fileURLToPath(migrationsFolder) });
   return { db, sqlite, close: () => sqlite.close() };
