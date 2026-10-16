@@ -5,7 +5,7 @@ last-verified: 2026-10-16
 
 # Design
 
-The visual system of the Android app, as drawn in Penpot. The source is the Penpot file "RCP" on design.penpot.app: its page "Screens" holds 17 screens, the light theme in the top row and the dark theme below it, and its local library holds the colors and type styles below. What the app does is in [PRODUCT.md](PRODUCT.md). The direction, and the owner's feedback on it, is in the [recipe screen brief](.impeccable/surfaces/src-app-recipe.md). No screen is coded yet. When code and Penpot disagree, fix one of them in the same change.
+The visual system of the Android app, as drawn in Penpot. The source is the Penpot file "RCP" on design.penpot.app: its page "Screens" holds 22 screens, the light theme in the top row and the dark theme below it, and its local library holds the colors and type styles below. What the app does is in [PRODUCT.md](PRODUCT.md). The direction, and the owner's feedback on it, is in the [recipe screen brief](.impeccable/surfaces/src-app-recipe.md). No screen is coded yet. When code and Penpot disagree, fix one of them in the same change.
 
 ## Principle
 The page stays quiet: white, near-black type, gray secondary text. Color comes from food facts (labels and macros) and from one accent for actions and live state. The look follows the owner's reference, Cookwell's recipe page.
@@ -122,12 +122,20 @@ In Penpot, each light screen has a dark twin:
 15. Edit recipe, one long scroll.
 16. Settings.
 17. Recipes, filtered.
+18. Connect, token rejected.
+19. Server unreachable.
+20. Import failed.
+21. Paste a recipe.
+22. Add your own food, one long scroll.
+
+## Errors
+Say what happened and what to do next, in one sentence each, and offer the next step as a button:
+- **Rejected token:** the token field gets a red outline. The help text says the server answered but refused the token, and where to copy it from.
+- **Server unreachable:** a full screen with "Try again" and "Open saved recipes", and a link to change the address or token.
+- **Failed import:** the link field gets a red outline. The help text says no recipe was found, and "Paste text instead" becomes the primary button.
 
 ## Not designed yet
-- Error states beyond offline: a wrong token, a server error, or an import that fails.
-- Paste-text review, which reuses import review.
-- Adding your own food.
-- Tablet layouts.
+Tablet layouts. The app runs on the owner's phone only, so none are planned.
 
 ## Sample content
 The recipes, amounts and nutrition values in the Penpot screens are invented samples. The photos are free Unsplash photos, placeholders only. `rcp.example.org` is a placeholder address. No real recipe data exists yet.

@@ -43,6 +43,9 @@ Nutrition is computed from linked foods (USDA, CIQUAL, BLS and the owner's own f
 
   Nutrition switches between per serving, per 100 g and the whole recipe. Scaling the servings changes the amounts, not the serving's size.
 - **Imports are checked before saving.** Each line shows its original text, the parsed amount and the linked food. A line with no food, or a unit with no portion weight, is flagged and fixed by linking a food or entering grams. When linking, overlapping foods from USDA, CIQUAL, BLS and the owner's own foods are shown separately with their source.
+  - When a site gives no recipe, the import offers "Paste text instead".
+  - Pasted text is split into lines: those with an amount become ingredients, the rest steps. It then goes through the same review.
+  - **Own foods:** a name, an optional brand kept as written, nutrients per 100 g, and portion weights such as "1 tbsp = 9 g". A nutrient left empty counts as unknown, not zero.
 - **Settings:**
   - theme (system, light or dark);
   - the accent color, from a few presets;
