@@ -1,5 +1,6 @@
 /** The units an ingredient amount is written in: metric weights and volumes, and kitchen measures. */
-export type Unit = 'g' | 'kg' | 'ml' | 'l' | 'tsp' | 'tbsp' | 'cup' | 'piece' | 'pinch';
+export const UNITS = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece', 'pinch'] as const;
+export type Unit = (typeof UNITS)[number];
 
 export interface Quantity {
   amount: number;

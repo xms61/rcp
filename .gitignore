@@ -17,6 +17,11 @@ docs/scratch/
 .claude/worktrees/
 CLAUDE.local.md
 
+# Local SQLite databases (the API's default is apps/api/rcp.db)
+*.db
+*.db-shm
+*.db-wal
+
 # OS and editor files
 .DS_Store
 Thumbs.db
@@ -24,3 +29,6 @@ Thumbs.db
 
 # Impeccable design tool: runtime state of its decision pages
 **/.impeccable/questions/
+
+# Impeccable design tool: its detector hook cache
+**/.impeccable/hook.cache.json
