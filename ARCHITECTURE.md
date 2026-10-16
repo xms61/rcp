@@ -11,7 +11,7 @@ RCP is an Android app (React Native with Expo) for its owner's phone. It talks o
 | Path | Holds |
 | :-- | :-- |
 | `packages/domain/` | `@rcp/domain`: recipe logic in plain TypeScript, for both the app and the API. `units.ts` converts amounts to grams; `recipe.ts` holds the zod schemas both sides validate a recipe and the list query with |
-| `apps/api/` | `@rcp/api`: the Hono API on the VPS. `app.ts` holds the routes, `config.ts` reads the environment, `main.ts` serves. `src/db/` holds the Drizzle tables (`schema.ts`) and opens the SQLite file, applying the migrations in `drizzle/` (`database.ts`). esbuild bundles it into one file for its image (`apps/api/Dockerfile`), except better-sqlite3, a native module the image carries beside it. Food imports come later |
+| `apps/api/` | `@rcp/api`: the Hono API on the VPS. `app.ts` holds the routes, `config.ts` reads the environment, `main.ts` serves. `src/db/` holds the Drizzle tables (`schema.ts`), opens the SQLite file, applying the migrations in `drizzle/` (`database.ts`), and reads and writes recipes (`recipes.ts`). esbuild bundles it into one file for its image (`apps/api/Dockerfile`), except better-sqlite3, a native module the image carries beside it. Food imports come later |
 | `apps/mobile/` | `@rcp/mobile`: the Expo app for Android (SDK 57, Expo Router). Screens live in `src/app/`; `src/connection/` holds the API address and token (secure storage), the URL check and the connection test. Its own rules: [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md) |
 | `deploy/` | What runs on the VPS: `compose.yml` for the API on the shared `edge` network, `rcp.caddy` for ysto's Caddy, and the `.env` template ([DEPLOY.md](docs/DEPLOY.md)). `.github/workflows/release.yml` publishes the image |
 | `scripts/` | Repo tooling: the doc and tracked-file checks, the lint-rule tests, the agent guard hook, setup |
@@ -30,4 +30,5 @@ ESLint enforces the domain boundary (`no-restricted-imports` in [eslint.config.j
 - No test is skipped or focused in committed code: ESLint, `vitest/no-disabled-tests` and `vitest/no-focused-tests`.
 - `apps/mobile` never imports `apps/api`'s code: ESLint `no-restricted-imports`.
 - The app keeps the API token only in `expo-secure-store`, and sends it only in the `Authorization` header to an `https://` address (http only in development builds), and only to the address it was saved for: `apps/mobile/src/connection/`, tested there.
-- Every API route except `/healthz` sits under `/api` and needs the bearer token: Hono's `bearerAuth` on `/api/*` in `apps/api/src/app.ts`, tested in `app.test.ts`, including an unknown route.
+- Every API route except `/healthz` sits under `/api` and needs the bearer token: Hono's `bearerAuth` on `/api/*` in `apps/api/src/app.ts`, tested in `app.test.ts`, including an unknown route. The recipe routes check it too, tested in `recipes.test.ts`.
+- Every request body and query goes through a `@rcp/domain` schema before the API uses it, and every path id through `idParam` in `app.ts`. The schemas are strict, so unknown fields are rejected. A failure answers 400 with the field paths, never the input. Tested in `recipes.test.ts`.

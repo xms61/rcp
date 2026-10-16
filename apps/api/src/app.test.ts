@@ -1,8 +1,10 @@
+import { DrizzleQueryError } from 'drizzle-orm/errors';
 import { describe, expect, test } from 'vitest';
-import { createApp } from './app';
+import { createApp, describeError } from './app';
+import { openTestDatabase } from './test-db';
 
 const token = 'test-token-0123456789abcdef0123456789abcdef';
-const app = createApp({ token });
+const app = createApp({ token, db: openTestDatabase().db });
 
 function get(path: string, authorization?: string) {
   return app.request(path, authorization ? { headers: { Authorization: authorization } } : {});
@@ -38,5 +40,19 @@ describe('the token on /api routes', () => {
 
   test('is checked before an unknown route answers 404', async () => {
     expect((await get('/api/no-such-route')).status).toBe(401);
+  });
+});
+
+describe('describeError', () => {
+  test("logs a failed query's SQLite error, never its bound values", () => {
+    const cause = Object.assign(new Error('database is locked'), { name: 'SqliteError', code: 'SQLITE_BUSY' });
+    const error = new DrizzleQueryError('insert into recipes (title) values (?)', ['Secret family stew'], cause);
+    const logged = describeError(error);
+    expect(logged).toBe('DrizzleQueryError: SqliteError SQLITE_BUSY: database is locked');
+    expect(logged).not.toContain('Secret family stew');
+  });
+
+  test('logs any other error by its name and message', () => {
+    expect(describeError(new TypeError('x is undefined'))).toBe('TypeError: x is undefined');
   });
 });
