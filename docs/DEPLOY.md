@@ -1,6 +1,6 @@
 ---
 status: draft
-last-verified: 2026-10-15
+last-verified: 2026-10-16
 ---
 
 # Deploy
@@ -8,7 +8,7 @@ last-verified: 2026-10-15
 How RCP's API gets onto the owner's VPS and stays current. Why it is built this way: [an Android app with the data on the VPS](design-docs/mobile-app-and-api.md). It follows BeanQuery's runbook on the same VPS (`docs/DEPLOY.md` in github.com/xms61/BeanQuery), which this doc doesn't repeat. Commands marked *owner machine* run in the repo on the development machine; the others run on the VPS over SSH as the `deploy` user. Real domains, addresses and folders go in `.env` files and on the VPS, never in this doc.
 
 ## Status
-Not deployed yet. The files and this runbook exist; the first run of it ticks milestone 4 of the [migration plan](exec-plans/active/2026-10-15-mobile-migration.md). There is no database yet, so there are no backups to set up; that comes with the first feature that stores recipes ([tech-debt tracker](exec-plans/tech-debt-tracker.md)).
+Not deployed yet. The files and this runbook exist; the first run of it ticks milestone 4 of the [migration plan](exec-plans/active/2026-10-15-mobile-migration.md). The API keeps its recipes in SQLite at `/opt/rcp/data/rcp.db`. There is no backup yet: the timer and a restore drill come before the first deploy with recipe data ([tech-debt tracker](exec-plans/tech-debt-tracker.md)).
 
 ## What runs where
 - **The VPS** is the one that runs ysto and BeanQuery, set up by ysto's runbook: Docker, keys-only SSH, a firewall allowing 22, 80 and 443 only. Nothing in that setup changes.
@@ -24,8 +24,9 @@ Add an `A` record (and `AAAA`) for RCP's name, such as `rcp` under a domain the 
 ### 2. Folders and settings
 The `edge` network and `/opt/caddy-sites` exist already (BeanQuery's step 2).
 ```bash
-sudo mkdir -p /opt/rcp && sudo chown deploy:deploy /opt/rcp
+sudo mkdir -p /opt/rcp/data && sudo chown deploy:deploy /opt/rcp && sudo chown 1000:1000 /opt/rcp/data
 ```
+`/opt/rcp/data` holds the database, `rcp.db`. It belongs to uid 1000, the image's `node` user, because the API's filesystem is read-only apart from that folder.
 *Owner machine*: copy the deploy files over:
 ```bash
 scp deploy/compose.yml deploy@<server>:/opt/rcp/
@@ -37,7 +38,7 @@ On the VPS:
 - In `/opt/caddy-sites/rcp.caddy`, replace `rcp.example.org` with the domain: `sed -i 's/rcp.example.org/<domain>/' /opt/caddy-sites/rcp.caddy`. With the placeholder left in, HTTPS to the domain fails with `tlsv1 alert internal error`.
 
 ### 3. The image
-The first release makes the GHCR package `ghcr.io/xms61/rcp` ([Release and update](#release-and-update)). It is private at first: in its package settings on GitHub, set the visibility to public once, as BeanQuery's is. The image holds only the bundled API: no data, no `.env`, no token.
+The first release makes the GHCR package `ghcr.io/xms61/rcp` ([Release and update](#release-and-update)). It is private at first: in its package settings on GitHub, set the visibility to public once, as BeanQuery's is. The image holds the bundled API, its migrations and better-sqlite3's prebuilt binaries: no data, no `.env`, no token.
 
 ### 4. First start
 ```bash

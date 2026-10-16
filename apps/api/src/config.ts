@@ -2,6 +2,8 @@ export interface Config {
   token: string;
   host: string;
   port: number;
+  /** The SQLite file. Relative paths start from where the API runs; the image uses /data/rcp.db. */
+  dbPath: string;
 }
 
 const MIN_TOKEN_LENGTH = 32;
@@ -22,5 +24,5 @@ export function loadConfig(env: Record<string, string | undefined>): Config {
     throw new Error(`PORT must be a port number from 1 to 65535, not "${env.PORT ?? ''}".`);
   }
   // Localhost by default, so a development server isn't reachable from the network; the image sets 0.0.0.0.
-  return { token, host: env.HOST ?? '127.0.0.1', port };
+  return { token, host: env.HOST ?? '127.0.0.1', port, dbPath: env.RCP_DB_PATH ?? 'rcp.db' };
 }

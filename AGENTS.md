@@ -33,6 +33,7 @@ This file is the map, not the manual: it says which doc to read for which task. 
 | Install | `pnpm install` |
 | Run locally | The API: `pnpm --filter @rcp/api dev`, with `RCP_API_TOKEN` in `.env` ([.env.example](.env.example)). The Android app: `pnpm --filter @rcp/mobile start` with Expo Go; its other commands, the APK build included, are in [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md) |
 | API bundle and image | `pnpm --filter @rcp/api build`; `docker build -f apps/api/Dockerfile .` |
+| Database migration after a schema change | `pnpm --filter @rcp/api db:generate`, then commit `apps/api/drizzle/` |
 | Lint and format | `pnpm lint`; `pnpm format` writes, `pnpm format:check` only checks |
 | Typecheck | `pnpm typecheck` |
 | Tests, all and one file | `pnpm test`; `pnpm --filter @rcp/domain test src/units.test.ts` |

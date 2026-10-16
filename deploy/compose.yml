@@ -14,6 +14,9 @@ services:
       HOST: 0.0.0.0
       PORT: 3000
     networks: [edge]
+    # The database, the only path the API writes to. ./data is /opt/rcp/data on the VPS, owned by uid 1000, the image's
+    # node user (docs/DEPLOY.md).
+    volumes: ['./data:/data']
     read_only: true
     tmpfs: [/tmp]
     cap_drop: [ALL]

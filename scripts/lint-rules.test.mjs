@@ -29,14 +29,17 @@ test('packages/domain may not import any package, Node built-in or app', async (
     'fs',
     'path',
     'vitest',
+    'zod-to-json-schema',
+    '@hono/zod-validator',
   ];
   const blocked = {};
   for (const specifier of specifiers) blocked[specifier] = await isBlockedInDomain(specifier);
   assert.deepEqual(blocked, Object.fromEntries(specifiers.map((specifier) => [specifier, true])));
 });
 
-test('packages/domain may import its own files, and its tests may import vitest', async () => {
+test('packages/domain may import its own files and zod, and its tests may import vitest', async () => {
   assert.equal(await isBlockedInDomain('./units'), false);
+  assert.equal(await isBlockedInDomain('zod'), false);
   assert.equal(await isBlockedInDomain('../units', 'packages/domain/src/nutrition/sum.ts'), false);
   assert.equal(await isBlockedInDomain('vitest', 'packages/domain/src/units.test.ts'), false);
 });

@@ -2,3 +2,5 @@
 *.md
 pnpm-lock.yaml
 LICENSES/
+# drizzle-kit writes these; editing them by hand breaks its snapshots.
+apps/api/drizzle/

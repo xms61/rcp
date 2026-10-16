@@ -28,8 +28,9 @@ export default defineConfig(
     },
   },
   {
-    // ARCHITECTURE.md: packages/domain is plain TypeScript with no dependencies, so the app and the API can both use
-    // it. Its own tsconfig's rootDir stops relative imports that leave src/. Tested in scripts/lint-rules.test.mjs.
+    // ARCHITECTURE.md: packages/domain is plain TypeScript, so the app and the API can both use it. Its one dependency
+    // is zod, for the schemas both sides validate with (recipes v1 plan). Its own tsconfig's rootDir stops relative
+    // imports that leave src/. Tested in scripts/lint-rules.test.mjs.
     files: ['packages/domain/src/**'],
     ignores: ['**/*.test.ts'],
     rules: {
@@ -38,9 +39,9 @@ export default defineConfig(
         {
           patterns: [
             {
-              regex: '^(?!\\.\\.?/)',
+              regex: '^(?!\\.\\.?/|zod$)',
               message:
-                'packages/domain imports nothing but its own files: no packages, Node APIs or apps. Do the I/O in apps/api or apps/mobile and pass plain values into the domain function.',
+                'packages/domain imports nothing but its own files and zod: no other packages, Node APIs or apps. Do the I/O in apps/api or apps/mobile and pass plain values into the domain function.',
             },
           ],
         },
