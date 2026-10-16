@@ -26,6 +26,11 @@ The recipe surface of the Android app and the screens around it. Mode: Operate. 
 15. Edit recipe: fields, rating, ingredient lines with labels, steps, and delete kept apart at the end.
 16. Settings: server, theme, accent color, amounts, cooking, offline copies.
 17. Recipes, filtered: the active filters as chips, and their count.
+18. Connect, token rejected: the token field in error, with where to copy the token from.
+19. Server unreachable: try again, or open saved recipes.
+20. Import failed: the link field in error, and paste text instead.
+21. Paste a recipe: one text box, with what was found shown before splitting.
+22. Add your own food: name, brand, nutrients per 100 g, portion weights.
 
 Every screen also has a dark version, in the second row.
 
@@ -64,4 +69,4 @@ Small and functional only: the tab underline slides, a tick fills its checkbox a
 - Which nutrients the Nutrition page lists by default (PRODUCT.md, undecided).
 - Tags or categories on the recipe list.
 - The rating scales (taste 1–5, difficulty in three steps, price € to €€€) are a first proposal.
-- Error states beyond offline (a wrong token, a server error, a failed import), adding your own food, and tablet layouts: not designed yet.
+- Tablet layouts: not planned, since the app runs on the owner's phone.
