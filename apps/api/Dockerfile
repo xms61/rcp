@@ -4,7 +4,7 @@
 # a native module: the image keeps its JavaScript and its prebuilt Alpine binaries, and nothing else from
 # node_modules. Dependabot keeps the digest current in both FROM lines.
 
-FROM --platform=$BUILDPLATFORM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f AS build
+FROM --platform=$BUILDPLATFORM node:26-alpine@sha256:6f08a523443ddedf52941874c203475b0ad503e859ad70cb26ab8be9a517dbd5 AS build
 # The pnpm version pinned in package.json's packageManager field.
 RUN npm install --global --ignore-scripts pnpm@12.10.1
 WORKDIR /app
@@ -23,7 +23,7 @@ RUN mkdir -p /out/node_modules \
   && rm -rf /out/node_modules/better-sqlite3/deps /out/node_modules/better-sqlite3/src \
   && find /out/node_modules/better-sqlite3/prebuilds -type f ! -name 'linuxmusl-*' -delete
 
-FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f
+FROM node:26-alpine@sha256:6f08a523443ddedf52941874c203475b0ad503e859ad70cb26ab8be9a517dbd5
 # The API needs no package manager, and the ones in the base image carry their own vulnerabilities. apk goes too,
 # once tini is in.
 RUN apk add --no-cache tini \
